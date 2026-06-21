@@ -34,13 +34,23 @@ component patterns), then asks **Claude** to synthesize a polished
 [`design.md`](#-example-output) — a description of the site's design language
 clear enough that an LLM can "follow this design" and produce consistent UI.
 
-The result is shown as **raw Markdown + a live preview**, with two one-click
-copy buttons:
+The result **streams in live** as Claude writes it, shown as raw Markdown + a
+rendered preview, with copy and download actions:
 
-| Button | Copies |
+| Action | What it does |
 | --- | --- |
-| **Copy design.md** | The spec itself. |
-| **Copy prompt for Claude** | A ready-to-paste prompt with the spec inlined — drop it into Claude, then ask it to "build a hero section", "design a pricing page", etc. |
+| **Copy design.md** | Copies the spec itself. |
+| **Copy prompt for Claude** | Copies a ready-to-paste prompt with the spec inlined — drop it into Claude, then ask it to "build a hero section", "design a pricing page", etc. |
+| **↓ design.md** | Downloads the spec as a Markdown file. |
+| **↓ tokens.json** | Downloads the raw extracted tokens as JSON. |
+
+### 🔴 Live Preview — does the spec actually work?
+
+Switch to the **Live Preview** tab and Claude builds a self-contained sample
+page (nav, hero, buttons, cards, a form) **purely from the `design.md`**,
+rendered in a sandboxed `<iframe>`. It's the round-trip test built in: if the
+generated component looks like it belongs on the original site, the spec is
+faithful. You can download the result as `preview.html`.
 
 ---
 
@@ -97,10 +107,13 @@ Open **http://localhost:3000**, paste a URL, and hit **Generate design.md**.
    - **Shadows** — `box-shadow` values + Tailwind `shadow-*` utilities
    - **Components** — button / card / form CSS snippets via heuristics
    - **Framework guess** — Tailwind, Bootstrap, MUI, Chakra
-4. **Synthesize** — tokens + representative HTML/CSS snippets go to Claude with
-   a fixed, opinionated system prompt that enforces a consistent section
-   structure and marks anything inferred as `(assumed)`.
-5. **Render** — raw Markdown, live preview, and the two copy buttons.
+4. **Synthesize (streaming)** — tokens + representative HTML/CSS snippets go to
+   Claude with a fixed, opinionated system prompt that enforces a consistent
+   section structure and marks anything inferred as `(assumed)`. The response is
+   **streamed** to the browser token-by-token (a JSON meta line, then markdown).
+5. **Render** — raw Markdown + live preview, copy/download actions, and a
+   **Live Preview** tab that round-trips the spec back through Claude into a
+   sandboxed sample page.
 
 ---
 
@@ -130,20 +143,22 @@ A trimmed `design.md` generated from `stripe.com`:
 ```
 src/
 ├── app/
-│   ├── api/generate/route.ts   # validate → fetch → extract → Claude → respond
+│   ├── api/generate/route.ts   # validate → fetch → extract → STREAM design.md
+│   ├── api/preview/route.ts    # design.md → sample HTML page (live preview)
 │   ├── layout.tsx
-│   ├── page.tsx                # URL form, loading & error states, results
+│   ├── page.tsx                # URL form, stream consumer, results
 │   └── globals.css             # Tailwind + minimal markdown-preview styles
 ├── components/
 │   ├── CopyButton.tsx          # clipboard with insecure-context fallback
-│   └── ResultPanel.tsx         # raw markdown + live preview + copy buttons
+│   └── ResultPanel.tsx         # tabs: Spec (md + copy/download) + Live Preview
 └── lib/
     ├── validateUrl.ts          # http/https + length + hostname checks
     ├── fetchSite.ts            # HTML + main CSS fetch (size/time capped)
     ├── extract.ts              # design-token extraction heuristics
-    ├── prompt.ts               # system prompt + user-prompt builder
-    ├── claude.ts               # Anthropic SDK wrapper + friendly errors
+    ├── prompt.ts               # system prompts + user-prompt builders
+    ├── claude.ts               # Anthropic SDK wrapper (stream + preview)
     ├── followupPrompt.ts       # "Copy prompt for Claude" template
+    ├── download.ts             # client-side file download helper
     └── types.ts                # shared types (ExtractedDesign, responses)
 ```
 

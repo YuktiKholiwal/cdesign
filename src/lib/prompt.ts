@@ -72,6 +72,24 @@ const OUTPUT_TEMPLATE = `# Design Spec – {{siteNameOrHost}}
 - How to "sound like" this brand in UI copy (1–3 bullet points)
 - How to "feel like" this site visually when designing new components (1–3 bullet points)`;
 
+/** System prompt for the live-preview generator (spec -> sample HTML page). */
+export const PREVIEW_SYSTEM_PROMPT = `You are a senior frontend engineer. Given a design.md spec that describes a website's visual language, you build a single self-contained HTML page that DEMONSTRATES the design system so a human can judge whether the spec is faithful.
+
+Rules:
+- Output ONE complete HTML document only — starting with <!doctype html>. No markdown, no code fences, no commentary.
+- Inline all CSS in a single <style> tag. Do not use external CSS or JS frameworks. You MAY load fonts via a Google Fonts <link> if the spec names a web font.
+- Follow the spec EXACTLY for colors (use the given hex values), typography, spacing, border radius, and shadows.
+- Render a representative sample, in this order: a top navigation/header, a hero section with a heading + subtext + primary and secondary buttons, a row of 3 cards, and a simple form (one labeled input + a submit button).
+- Keep it accessible and responsive. No external images — use solid colors, gradients, or simple inline SVG only.
+- Do not include analytics, tracking, or network calls.`;
+
+/** Build the user message for the preview generator. */
+export function buildPreviewPrompt(designMd: string): string {
+  return `Here is the design.md spec. Build the demonstration page described in your instructions, following it exactly.
+
+${designMd}`;
+}
+
 /** Build the user message containing the extracted signals + the required template. */
 export function buildUserPrompt(args: {
   host: string;

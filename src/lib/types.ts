@@ -40,14 +40,31 @@ export type DesignSnippets = {
   cssSnippet: string | null;
 };
 
-/** Successful API response from /api/generate. */
+/** Successful (non-streaming) API response shape from /api/generate. */
 export type GenerateResponse = {
   designMd: string;
   rawTokens: ExtractedDesign;
   host: string;
 };
 
-/** Error API response from /api/generate. */
+/**
+ * First line of the streamed /api/generate response (JSON + "\n"), sent before
+ * any markdown so the client knows the host and tokens up front.
+ */
+export type StreamMeta = {
+  host: string;
+  rawTokens: ExtractedDesign;
+};
+
+/** Successful response from /api/preview. */
+export type PreviewResponse = {
+  html: string;
+};
+
+/** Error API response shape (shared). */
 export type GenerateErrorResponse = {
   error: string;
 };
+
+/** Sentinel marking a mid-stream failure after the 200/meta were already sent. */
+export const STREAM_ERROR_SENTINEL = "<<<CDESIGN_ERROR>>>";

@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { validateUrl } from "@/lib/validateUrl";
 import { fetchSite } from "@/lib/fetchSite";
 import { extractDesign } from "@/lib/extract";
-import { ClaudeError, generateDesignMd } from "@/lib/claude";
-import type { GenerateResponse } from "@/lib/types";
+import { ClaudeError, ensureClaudeReady, streamDesignMd } from "@/lib/claude";
+import { STREAM_ERROR_SENTINEL, type StreamMeta } from "@/lib/types";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -30,6 +30,17 @@ export async function POST(request: Request) {
     return errorResponse(validation.error, 400);
   }
 
+  // Fail fast on misconfiguration so we can return a clean HTTP error rather
+  // than a 200 with the error baked into the stream.
+  try {
+    ensureClaudeReady();
+  } catch (err) {
+    return errorResponse(
+      err instanceof ClaudeError ? err.message : "Server is not configured.",
+      500,
+    );
+  }
+
   // 1. Fetch HTML + main CSS.
   let site;
   try {
@@ -42,31 +53,44 @@ export async function POST(request: Request) {
     return errorResponse(message, 502);
   }
 
-  // 2. Extract design signals.
+  // 2. Extract design signals (deterministic, fast).
   const { design, snippets } = extractDesign(site.html, site.css);
 
-  // 3. Ask Claude to synthesize design.md.
-  let designMd: string;
-  try {
-    designMd = await generateDesignMd({
-      host: site.host,
-      design,
-      snippets,
-    });
-  } catch (err) {
-    if (err instanceof ClaudeError) {
-      return errorResponse(err.message, 502);
-    }
-    return errorResponse(
-      "Something went wrong while generating the design spec.",
-      500,
-    );
-  }
+  // 3. Stream the design.md from Claude.
+  //    Wire format: one JSON meta line ("\n"-terminated), then raw markdown.
+  const encoder = new TextEncoder();
+  const meta: StreamMeta = { host: site.host, rawTokens: design };
 
-  const payload: GenerateResponse = {
-    designMd,
-    rawTokens: design,
-    host: site.host,
-  };
-  return NextResponse.json(payload);
+  const stream = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      controller.enqueue(encoder.encode(`${JSON.stringify(meta)}\n`));
+      try {
+        for await (const chunk of streamDesignMd({
+          host: site.host,
+          design,
+          snippets,
+        })) {
+          controller.enqueue(encoder.encode(chunk));
+        }
+      } catch (err) {
+        const message =
+          err instanceof ClaudeError
+            ? err.message
+            : "Generation failed partway through.";
+        controller.enqueue(
+          encoder.encode(`\n${STREAM_ERROR_SENTINEL}${message}`),
+        );
+      } finally {
+        controller.close();
+      }
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      "Cache-Control": "no-store",
+      "X-Accel-Buffering": "no",
+    },
+  });
 }
