@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 antialiased;
+}
+
+/* Minimal prose styling for the rendered Markdown preview. */
+.md-preview h1 {
+  @apply text-2xl font-semibold mt-6 mb-3;
+}
+.md-preview h2 {
+  @apply text-xl font-semibold mt-6 mb-2 border-b border-slate-200 pb-1;
+}
+.md-preview h3 {
+  @apply text-lg font-semibold mt-5 mb-2;
+}
+.md-preview p {
+  @apply my-2 leading-relaxed;
+}
+.md-preview ul {
+  @apply list-disc pl-6 my-2 space-y-1;
+}
+.md-preview ol {
+  @apply list-decimal pl-6 my-2 space-y-1;
+}
+.md-preview code {
+  @apply rounded bg-slate-100 px-1 py-0.5 text-sm font-mono;
+}
+.md-preview pre {
+  @apply rounded bg-slate-900 text-slate-100 p-3 overflow-x-auto my-3 text-sm;
+}
+.md-preview pre code {
+  @apply bg-transparent p-0 text-inherit;
+}
+.md-preview strong {
+  @apply font-semibold;
+}
+.md-preview a {
+  @apply text-indigo-600 underline;
+}
