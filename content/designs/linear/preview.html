@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Linear design preview</title>
+<style>
+  :root { --bg:#08090A; --panel:#15171A; --border:#23262B; --indigo:#5E6AD2; --text:#F7F8F8; --muted:#8A8F98; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:"Inter",-apple-system,sans-serif; background:var(--bg); color:var(--muted); line-height:1.5; }
+  .wrap { max-width:1040px; margin:0 auto; padding:0 24px; }
+  header { position:sticky; top:0; background:rgba(8,9,10,.7); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); }
+  nav { display:flex; align-items:center; justify-content:space-between; height:56px; }
+  .brand { color:var(--text); font-weight:600; font-size:18px; letter-spacing:-.01em; }
+  .links { display:flex; gap:20px; align-items:center; }
+  .links a { color:var(--muted); text-decoration:none; font-size:14px; }
+  .links a:hover { color:var(--text); }
+  .btn { border:0; border-radius:8px; padding:9px 16px; font-weight:500; font-size:14px; cursor:pointer; }
+  .btn-primary { background:var(--indigo); color:#fff; }
+  .btn-secondary { background:rgba(255,255,255,.06); color:var(--text); border:1px solid var(--border); }
+  .hero { text-align:center; padding:80px 0 64px; background:radial-gradient(60% 50% at 50% 0%, rgba(94,106,210,.18), transparent); }
+  .eyebrow { color:var(--indigo); font-size:12px; text-transform:uppercase; letter-spacing:.08em; font-weight:600; }
+  h1 { color:var(--text); font-size:56px; font-weight:600; letter-spacing:-.02em; line-height:1.1; margin:16px 0; }
+  .sub { font-size:18px; max-width:520px; margin:0 auto; }
+  .cta { display:flex; gap:12px; justify-content:center; margin-top:32px; }
+  .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; padding:64px 0; }
+  .card { background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:24px; box-shadow:0 8px 40px rgba(0,0,0,.5); }
+  .card h3 { color:var(--text); font-size:18px; margin-bottom:8px; }
+  .form { background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:32px; max-width:420px; margin:0 auto 80px; }
+  label { display:block; font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:8px; }
+  input { width:100%; background:#0F1113; border:1px solid var(--border); border-radius:8px; padding:10px 12px; color:var(--text); font-size:15px; }
+  input:focus { outline:none; border-color:var(--indigo); box-shadow:0 0 0 3px rgba(94,106,210,.3); }
+  .form .btn-primary { margin-top:16px; width:100%; }
+  @media (max-width:768px){ .cards{grid-template-columns:1fr;} h1{font-size:38px;} }
+</style>
+</head>
+<body>
+  <header><div class="wrap"><nav>
+    <div class="brand">Linear</div>
+    <div class="links"><a href="#">Features</a><a href="#">Method</a><a href="#">Customers</a><a href="#">Pricing</a><button class="btn btn-primary">Log in</button></div>
+  </nav></div></header>
+
+  <section class="hero"><div class="wrap">
+    <div class="eyebrow">Built for product teams</div>
+    <h1>The issue tracker<br/>you'll enjoy using</h1>
+    <p class="sub">Linear streamlines issues, projects, and roadmaps so teams can stay focused on what matters.</p>
+    <div class="cta"><button class="btn btn-primary">Start building</button><button class="btn btn-secondary">Open app</button></div>
+  </div></section>
+
+  <div class="wrap">
+    <div class="cards">
+      <div class="card"><h3>Issues</h3><p>Track work with a fast, keyboard-first interface designed for speed.</p></div>
+      <div class="card"><h3>Projects</h3><p>Plan and ship features with milestones and clear ownership.</p></div>
+      <div class="card"><h3>Insights</h3><p>Understand velocity and progress with real-time analytics.</p></div>
+    </div>
+
+    <form class="form" onsubmit="return false">
+      <label for="email">Work email</label>
+      <input id="email" type="email" placeholder="you@company.com" />
+      <button class="btn btn-primary">Get started</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "slug": "stripe",
+  "title": "Stripe",
+  "author": "cdesign",
+  "description": "Clean, technical, and trustworthy — restrained color, refined typography, and tight spacing on a deep-navy base with a vivid purple accent.",
+  "topics": ["saas", "fintech", "minimal", "marketing"],
+  "source": "https://stripe.com",
+  "version": "1.0.0",
+  "createdAt": "2026-06-01T00:00:00.000Z"
+}

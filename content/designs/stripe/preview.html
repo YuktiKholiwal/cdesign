@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Stripe design preview</title>
+<style>
+  :root {
+    --navy:#0A2540; --purple:#635BFF; --slate:#425466; --muted:#697386;
+    --bg-soft:#F6F9FC; --border:#E3E8EE; --danger:#DF1B41;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; color: var(--slate); background:#fff; line-height:1.5; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  header { position: sticky; top:0; backdrop-filter: blur(8px); background: rgba(255,255,255,.8); border-bottom:1px solid var(--border); }
+  nav { display:flex; align-items:center; justify-content:space-between; height:64px; }
+  .brand { font-weight:700; color: var(--navy); font-size:20px; letter-spacing:-.01em; }
+  .links { display:flex; gap:24px; align-items:center; }
+  .links a { color: var(--slate); text-decoration:none; font-size:15px; font-weight:500; }
+  .links a:hover { color: var(--purple); }
+  .btn { border:0; border-radius:8px; padding:10px 18px; font-weight:600; font-size:15px; cursor:pointer; }
+  .btn-primary { background: var(--purple); color:#fff; box-shadow:0 2px 5px rgba(0,0,0,.08); }
+  .btn-secondary { background:#fff; color: var(--navy); border:1px solid var(--border); }
+  .hero { background: linear-gradient(180deg,#fff, var(--bg-soft)); padding: 96px 0 64px; }
+  .eyebrow { color: var(--purple); font-weight:600; font-size:14px; letter-spacing:.02em; text-transform:uppercase; }
+  h1 { color: var(--navy); font-size:52px; font-weight:600; line-height:1.1; letter-spacing:-.02em; margin:12px 0 16px; }
+  .sub { font-size:18px; color: var(--muted); max-width:540px; }
+  .cta { display:flex; gap:12px; margin-top:32px; }
+  .cards { display:grid; grid-template-columns: repeat(3,1fr); gap:24px; padding:64px 0; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 15px 35px rgba(0,0,0,.1); padding:32px; }
+  .card h3 { color: var(--navy); font-size:20px; margin-bottom:8px; }
+  .form { background: var(--bg-soft); border-radius:16px; padding:32px; max-width:420px; margin:0 0 96px; }
+  label { display:block; font-size:13px; font-weight:600; color: var(--slate); margin-bottom:6px; }
+  input { width:100%; border:1px solid var(--border); border-radius:8px; padding:10px 12px; font-size:15px; }
+  input:focus { outline:none; border-color: var(--purple); box-shadow:0 0 0 3px rgba(99,91,255,.2); }
+  .form .btn-primary { margin-top:16px; width:100%; }
+  @media (max-width:768px){ .cards{grid-template-columns:1fr;} h1{font-size:36px;} }
+</style>
+</head>
+<body>
+  <header><div class="wrap"><nav>
+    <div class="brand">stripe</div>
+    <div class="links"><a href="#">Products</a><a href="#">Solutions</a><a href="#">Developers</a><a href="#">Pricing</a><button class="btn btn-primary">Sign in</button></div>
+  </nav></div></header>
+
+  <section class="hero"><div class="wrap">
+    <div class="eyebrow">Payments infrastructure</div>
+    <h1>Financial infrastructure for the internet</h1>
+    <p class="sub">Millions of companies use our platform to accept payments, send payouts, and manage their businesses online.</p>
+    <div class="cta"><button class="btn btn-primary">Start now</button><button class="btn btn-secondary">Contact sales →</button></div>
+  </div></section>
+
+  <div class="wrap">
+    <div class="cards">
+      <div class="card"><h3>Payments</h3><p>Accept payments online, in person, and around the world with a unified platform.</p></div>
+      <div class="card"><h3>Billing</h3><p>Capture recurring revenue and automate invoicing at any scale.</p></div>
+      <div class="card"><h3>Connect</h3><p>Integrated payments for platforms and marketplaces of any size.</p></div>
+    </div>
+
+    <form class="form" onsubmit="return false">
+      <label for="email">Work email</label>
+      <input id="email" type="email" placeholder="you@company.com" />
+      <button class="btn btn-primary">Request access</button>
+    </form>
+  </div>
+</body>
+</html>

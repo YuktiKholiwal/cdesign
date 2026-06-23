@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
-  title: "cdesign — design.md generator",
+  title: "cdesign — the design spec marketplace",
   description:
-    "Paste a website URL and generate a human-readable design.md spec describing its design system.",
+    "Browse, preview, and install design languages for your AI agent. One command drops a design.md into your project so Claude builds on-brand UI.",
 };
 
 export default function RootLayout({
@@ -14,7 +16,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="flex min-h-screen flex-col bg-white text-slate-900">
+        <SiteHeader />
+        <div className="flex-1">{children}</div>
+        <SiteFooter />
+      </body>
     </html>
   );
 }

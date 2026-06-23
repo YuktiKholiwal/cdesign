@@ -68,3 +68,46 @@ export type GenerateErrorResponse = {
 
 /** Sentinel marking a mid-stream failure after the 200/meta were already sent. */
 export const STREAM_ERROR_SENTINEL = "<<<CDESIGN_ERROR>>>";
+
+/**
+ * Manifest for a published design package (`design.json`). This is the
+ * marketplace's equivalent of a skill's SKILL.md frontmatter — the metadata
+ * the registry indexes and the CLI reads when installing.
+ */
+export type DesignManifest = {
+  /** URL-safe identifier, e.g. "stripe". Matches the package folder name. */
+  slug: string;
+  /** Display name, e.g. "Stripe". */
+  title: string;
+  /** Who published it. */
+  author: string;
+  /** One-line summary shown on cards and in search. */
+  description: string;
+  /** Free-form tags used for topic browsing, e.g. ["saas", "fintech"]. */
+  topics: string[];
+  /** The site the spec was derived from, e.g. "https://stripe.com". */
+  source: string;
+  /** Semantic version of the package. */
+  version: string;
+  /** ISO timestamp the package was created. */
+  createdAt: string;
+};
+
+/**
+ * A registry listing: manifest plus the runtime install count. This is what the
+ * marketplace grid renders. The heavy package contents (design.md, tokens,
+ * preview HTML) are loaded separately on the detail page.
+ */
+export type DesignListing = DesignManifest & {
+  installs: number;
+};
+
+/** The full contents of a design package, served to the CLI and detail page. */
+export type DesignPackage = {
+  manifest: DesignManifest;
+  designMd: string;
+  tokens: ExtractedDesign;
+  /** Self-contained sample page used as the card/detail thumbnail. May be empty. */
+  previewHtml: string;
+  installs: number;
+};
