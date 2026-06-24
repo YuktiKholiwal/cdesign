@@ -3,7 +3,7 @@
 import { CopyButton } from "./CopyButton";
 
 /**
- * The marketplace's install affordance — the `npx cdesign add <slug>` command
+ * The marketplace's install affordance — the `npx cdesign-cli add <slug>` command
  * with a copy button, mirroring skills.sh's one-line install.
  */
 export function InstallCommand({
@@ -13,7 +13,7 @@ export function InstallCommand({
   slug: string;
   size?: "lg" | "sm";
 }) {
-  const command = `npx cdesign add ${slug}`;
+  const command = `npx cdesign-cli add ${slug}`;
   const isLarge = size === "lg";
 
   return (

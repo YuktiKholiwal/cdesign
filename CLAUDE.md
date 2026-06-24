@@ -10,7 +10,7 @@
 
 A skills.sh-style **marketplace for design specs**. A "design" is a package
 (`design.md` + `tokens.json` + `design.json` manifest) that users browse,
-preview, and install with `npx cdesign add <slug>`. The URL→design.md generator
+preview, and install with `npx cdesign-cli add <slug>`. The URL→design.md generator
 (`/create`) is the authoring engine. Registry is file-based under
 `content/designs/` (see `src/lib/registry.ts`).
 
@@ -31,7 +31,7 @@ consistent with its overall feel and note it.
 
 To switch the project to a different design language, replace the files in
 `.claude/designs/active/` (e.g. `cp content/designs/<slug>/* .claude/designs/active/`
-or `npx cdesign add <slug>` then point this path at it).
+or `npx cdesign-cli add <slug>` then point this path at it).
 
 > Current active design: **Geist** (Vercel, Light theme) — minimal and
 > high-contrast: near-neutral surfaces, a tonal gray scale (`gray-1000` #171717

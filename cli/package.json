@@ -1,0 +1,37 @@
+{
+  "name": "cdesign-cli",
+  "version": "0.1.0",
+  "description": "Install a design language into your project — npx cdesign-cli add <slug>. The CLI for the cdesign design-spec marketplace.",
+  "type": "module",
+  "bin": {
+    "cdesign": "./cdesign.mjs"
+  },
+  "files": [
+    "cdesign.mjs",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "design",
+    "design-system",
+    "design-tokens",
+    "ai",
+    "claude",
+    "cli",
+    "marketplace",
+    "cdesign"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YuktiKholiwal/cdesign.git",
+    "directory": "cli"
+  },
+  "homepage": "https://github.com/YuktiKholiwal/cdesign#readme",
+  "bugs": {
+    "url": "https://github.com/YuktiKholiwal/cdesign/issues"
+  },
+  "author": "Yukti Kholiwal",
+  "license": "MIT"
+}

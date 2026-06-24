@@ -186,7 +186,7 @@ export default function CreatePage() {
             alongside a <span className="font-mono">design.json</span> manifest
             and an optional <span className="font-mono">preview.html</span>. It
             then appears in the grid and is installable via{" "}
-            <span className="font-mono">npx cdesign add &lt;slug&gt;</span>.
+            <span className="font-mono">npx cdesign-cli add &lt;slug&gt;</span>.
           </p>
           <p className="mt-2 text-neutral-500">
             (Hosted publishing — auth + one-click submit — is on the roadmap.)

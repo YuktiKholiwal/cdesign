@@ -3,7 +3,7 @@
  * cdesign — install a design language into your project.
  *
  * Usage:
- *   npx cdesign add <slug> [options]
+ *   npx cdesign-cli add <slug> [options]
  *
  * Options:
  *   -g, --global           Install into ~/<agent>/designs/ instead of ./<agent>/designs/
@@ -60,7 +60,7 @@ function parseArgs(argv) {
 const HELP = `cdesign — install a design language into your project
 
 Usage:
-  npx cdesign add <slug> [options]
+  npx cdesign-cli add <slug> [options]
 
 Options:
   -g, --global         Install globally (~/<agent>/designs/)
@@ -70,7 +70,7 @@ Options:
   -h, --help           Show this help
 
 Example:
-  npx cdesign add stripe
+  npx cdesign-cli add stripe
 `;
 
 function fail(msg) {
@@ -79,7 +79,7 @@ function fail(msg) {
 }
 
 async function add(opts) {
-  if (!opts.slug) fail("Missing design slug. Try: npx cdesign add stripe");
+  if (!opts.slug) fail("Missing design slug. Try: npx cdesign-cli add stripe");
 
   const agentDir = AGENT_DIRS[opts.agent];
   if (!agentDir) {
@@ -101,7 +101,11 @@ async function add(opts) {
     if (!res.ok) fail(`Registry returned HTTP ${res.status}.`);
     pkg = await res.json();
   } catch (err) {
-    fail(`Could not reach the registry: ${err.message}`);
+    fail(
+      `Could not reach the registry at ${host} (${err.message}).\n` +
+        `  Set a reachable host with: CDESIGN_HOST=https://your-host npx cdesign-cli add ${opts.slug}\n` +
+        `  or pass --host <url>.`,
+    );
   }
 
   await fs.mkdir(targetDir, { recursive: true });
@@ -155,7 +159,7 @@ async function main() {
   if (opts.command === "add") {
     await add(opts);
   } else {
-    fail(`Unknown command "${opts.command}". Try: npx cdesign add <slug>`);
+    fail(`Unknown command "${opts.command}". Try: npx cdesign-cli add <slug>`);
   }
 }
 

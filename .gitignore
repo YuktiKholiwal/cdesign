@@ -30,3 +30,6 @@ next-env.d.ts
 
 # local Claude Code overrides
 .claude/settings.local.json
+
+# npm pack output
+cli/*.tgz
