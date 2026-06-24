@@ -180,7 +180,7 @@ function extractSpacingAndRadius(
     }
   }
 
-  // Tailwind-ish utility hints in raw class strings (rounded-lg etc.)
+  // Tailwind-ish utility hints in raw class strings (rounded-md etc.)
   const radiusScale: Record<string, number> = {
     "rounded-none": 0,
     "rounded-sm": 2,

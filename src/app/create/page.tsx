@@ -111,24 +111,21 @@ export default function CreatePage() {
   const showResult = meta && designMd.trim().length > 0;
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
+    <main className="mx-auto max-w-5xl px-5 py-16 sm:py-20">
       <header className="mx-auto max-w-2xl text-center">
-        <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-          Create a design
+        <h1 className="text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
+          Create a Design
         </h1>
-        <p className="mt-3 text-slate-600">
+        <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-neutral-500">
           Paste a public website URL and generate a clean{" "}
-          <span className="font-mono text-slate-800">design.md</span> spec — the
+          <span className="font-mono text-neutral-700">design.md</span> spec — the
           same package format the marketplace ships. Preview it live, then
           download the package to publish.
         </p>
       </header>
 
-      <form onSubmit={handleSubmit} className="mx-auto mt-8 max-w-2xl">
-        <label htmlFor="url" className="block text-sm font-medium text-slate-700">
-          Website URL
-        </label>
-        <div className="mt-2 flex flex-col gap-2 sm:flex-row">
+      <form onSubmit={handleSubmit} className="mx-auto mt-10 max-w-xl">
+        <div className="flex flex-col gap-2 sm:flex-row">
           <input
             id="url"
             name="url"
@@ -138,14 +135,14 @@ export default function CreatePage() {
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             disabled={loading}
-            className="flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400 disabled:opacity-60"
+            className="h-12 flex-1 rounded-md border border-line bg-white px-3.5 text-neutral-900 placeholder:text-neutral-400 transition-colors focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 disabled:opacity-60"
           />
           <button
             type="submit"
             disabled={loading || !url.trim()}
-            className="inline-flex items-center justify-center rounded-lg bg-indigo-600 px-4 py-2 font-medium text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex h-12 items-center justify-center rounded-md bg-neutral-900 px-5 text-[15px] font-medium text-white transition-colors hover:bg-neutral-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {loading ? "Generating…" : "Generate design.md"}
+            {loading ? "Generating…" : "Generate"}
           </button>
         </div>
 
@@ -156,12 +153,12 @@ export default function CreatePage() {
         )}
 
         {loading && !streaming && (
-          <p className="mt-3 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-neutral-500">
             Fetching the page and extracting design tokens…
           </p>
         )}
         {streaming && (
-          <p className="mt-3 text-sm text-indigo-600">
+          <p className="mt-3 text-sm text-brand">
             Claude is writing the spec — streaming live below…
           </p>
         )}
@@ -177,8 +174,10 @@ export default function CreatePage() {
       )}
 
       {showResult && (
-        <section className="mx-auto mt-10 max-w-2xl rounded-xl border border-slate-200 bg-slate-50 p-5 text-sm text-slate-600">
-          <h2 className="font-semibold text-slate-800">Publish to the marketplace</h2>
+        <section className="mx-auto mt-10 max-w-2xl rounded-xl border border-line bg-neutral-50 p-5 text-sm text-neutral-600">
+          <h2 className="font-semibold tracking-tight text-neutral-900">
+            Publish to the marketplace
+          </h2>
           <p className="mt-2">
             Download the <span className="font-mono">design.md</span> and{" "}
             <span className="font-mono">tokens.json</span> above, then drop them
@@ -189,7 +188,7 @@ export default function CreatePage() {
             then appears in the grid and is installable via{" "}
             <span className="font-mono">npx cdesign add &lt;slug&gt;</span>.
           </p>
-          <p className="mt-2 text-slate-500">
+          <p className="mt-2 text-neutral-500">
             (Hosted publishing — auth + one-click submit — is on the roadmap.)
           </p>
         </section>

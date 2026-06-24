@@ -13,9 +13,8 @@ const SORTS: { key: Sort; label: string }[] = [
 ];
 
 /**
- * Client-side marketplace browser: search box, sort tabs, and topic chips that
- * filter the grid in-browser. Data is loaded server-side and passed in, so
- * there's no client fetching.
+ * Client-side marketplace browser: Geist search field, segmented sort, and
+ * topic chips that filter the grid in-browser. Data is loaded server-side.
  */
 export function DesignGrid({
   cards,
@@ -32,7 +31,7 @@ export function DesignGrid({
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    let result = cards.filter((c) => {
+    const result = cards.filter((c) => {
       const matchesTopic = !topic || c.topics.includes(topic);
       const matchesQuery =
         !q ||
@@ -42,7 +41,7 @@ export function DesignGrid({
       return matchesTopic && matchesQuery;
     });
 
-    result = [...result].sort((a, b) => {
+    return [...result].sort((a, b) => {
       if (sort === "az") return a.title.localeCompare(b.title);
       if (sort === "new")
         return (
@@ -50,30 +49,45 @@ export function DesignGrid({
         );
       return b.installs - a.installs;
     });
-
-    return result;
   }, [cards, query, sort, topic]);
 
   return (
     <div>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <input
-          type="search"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search designs…"
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400 sm:max-w-xs"
-        />
-        <div className="flex gap-1 rounded-lg border border-slate-200 bg-slate-50 p-0.5">
+        <div className="relative w-full sm:max-w-xs">
+          <svg
+            className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400"
+            viewBox="0 0 16 16"
+            fill="none"
+            aria-hidden
+          >
+            <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.5" />
+            <path
+              d="m11 11 3 3"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+          </svg>
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search designs…"
+            className="h-10 w-full rounded-md border border-line bg-white pl-9 pr-3 text-sm text-neutral-900 placeholder:text-neutral-400 transition-colors focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+          />
+        </div>
+
+        <div className="flex h-10 items-center gap-0.5 rounded-md border border-line bg-neutral-50 p-1">
           {SORTS.map((s) => (
             <button
               key={s.key}
               type="button"
               onClick={() => setSort(s.key)}
-              className={`rounded-md px-3 py-1.5 text-sm font-medium transition ${
+              className={`h-full rounded px-3 text-[13px] font-medium transition-colors ${
                 sort === s.key
-                  ? "bg-white text-slate-900 shadow-sm"
-                  : "text-slate-500 hover:text-slate-800"
+                  ? "bg-white text-neutral-900 shadow-sm"
+                  : "text-neutral-500 hover:text-neutral-900"
               }`}
             >
               {s.label}
@@ -83,7 +97,7 @@ export function DesignGrid({
       </div>
 
       {topics.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-5 flex flex-wrap gap-2">
           <Chip active={topic === null} onClick={() => setTopic(null)}>
             All
           </Chip>
@@ -96,11 +110,11 @@ export function DesignGrid({
       )}
 
       {filtered.length === 0 ? (
-        <p className="mt-10 text-center text-sm text-slate-500">
+        <p className="mt-16 text-center text-sm text-neutral-500">
           No designs match your search.
         </p>
       ) : (
-        <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((c) => (
             <DesignCard key={c.slug} design={c} />
           ))}
@@ -123,10 +137,10 @@ function Chip({
     <button
       type="button"
       onClick={onClick}
-      className={`rounded-full px-3 py-1 text-xs font-medium transition ${
+      className={`rounded-full border px-3 py-1 font-mono text-xs transition-colors ${
         active
-          ? "bg-slate-900 text-white"
-          : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+          ? "border-neutral-900 bg-neutral-900 text-white"
+          : "border-line text-neutral-600 hover:border-black/20 hover:text-neutral-900"
       }`}
     >
       {children}

@@ -18,19 +18,19 @@ export function InstallCommand({
 
   return (
     <div
-      className={`flex items-center justify-between gap-3 rounded-lg border border-slate-700 bg-slate-900 font-mono text-slate-100 ${
+      className={`flex items-center justify-between gap-3 rounded-md border border-neutral-700 bg-neutral-900 font-mono text-neutral-100 ${
         isLarge ? "px-4 py-3 text-sm" : "px-3 py-2 text-xs"
       }`}
     >
       <code className="truncate">
-        <span className="select-none text-slate-500">$ </span>
+        <span className="select-none text-neutral-500">$ </span>
         {command}
       </code>
       <CopyButton
         value={command}
         label="Copy"
         copiedLabel="Copied!"
-        className="shrink-0 rounded-md border border-slate-600 bg-slate-800 px-2.5 py-1 text-xs font-medium text-slate-200 transition hover:bg-slate-700"
+        className="shrink-0 rounded-md border border-neutral-600 bg-neutral-800 px-2.5 py-1 text-xs font-medium text-neutral-200 transition hover:bg-neutral-700"
       />
     </div>
   );

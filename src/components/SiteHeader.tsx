@@ -1,42 +1,46 @@
 import Link from "next/link";
+import { ButtonLink } from "./ui/Button";
 
-/** Global marketplace navigation, modeled on skills.sh's header. */
+/** Minimal Geist top nav: hairline divider, translucent blur, triangle mark. */
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/80 backdrop-blur">
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="grid h-7 w-7 place-items-center rounded-md bg-slate-900 text-sm font-bold text-white">
-            c
-          </span>
-          <span className="text-[15px] font-semibold tracking-tight text-slate-900">
-            cdesign
-          </span>
-          <span className="hidden text-xs text-slate-400 sm:inline">
-            the design spec marketplace
-          </span>
-        </Link>
-
-        <nav className="flex items-center gap-1 text-sm">
-          <NavLink href="/">Designs</NavLink>
-          <NavLink href="/topics">Topics</NavLink>
-          <Link
-            href="/create"
-            className="ml-1 inline-flex items-center rounded-md bg-slate-900 px-3 py-1.5 font-medium text-white transition hover:bg-slate-700"
-          >
-            Create
+    <header className="sticky top-0 z-20 border-b border-line bg-white/70 backdrop-blur-md">
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-5">
+        <div className="flex items-center gap-7">
+          <Link href="/" className="flex items-center gap-2">
+            <span
+              aria-hidden
+              className="h-0 w-0 border-x-[7px] border-b-[12px] border-x-transparent border-b-neutral-900"
+            />
+            <span className="text-[15px] font-semibold tracking-tight text-neutral-900">
+              cdesign
+            </span>
           </Link>
-        </nav>
+          <nav className="hidden items-center gap-1 sm:flex">
+            <NavLink href="/">Designs</NavLink>
+            <NavLink href="/topics">Topics</NavLink>
+          </nav>
+        </div>
+
+        <ButtonLink href="/create" variant="primary" size="sm">
+          Create
+        </ButtonLink>
       </div>
     </header>
   );
 }
 
-function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
+function NavLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
   return (
     <Link
       href={href}
-      className="rounded-md px-3 py-1.5 font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+      className="rounded-md px-2.5 py-1.5 text-sm font-medium text-neutral-500 transition-colors hover:text-neutral-900"
     >
       {children}
     </Link>

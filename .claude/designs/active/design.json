@@ -1,0 +1,10 @@
+{
+  "slug": "geist",
+  "title": "Geist",
+  "author": "cdesign",
+  "description": "Vercel’s Geist design system (Light theme) — minimal, high-contrast, developer-focused: near-neutral surfaces, a tonal gray scale, a blue accent for state, Geist Sans/Mono, and tight 6px radii.",
+  "topics": ["developer-tools", "minimal", "design-system", "marketing"],
+  "source": "https://vercel.com/geist",
+  "version": "1.0.0",
+  "createdAt": "2026-06-23T00:00:00.000Z"
+}

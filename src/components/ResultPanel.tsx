@@ -39,10 +39,10 @@ export function ResultPanel({
   return (
     <section className="mt-10 space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-lg font-semibold text-slate-800">
-          design.md for <span className="font-mono text-slate-600">{host}</span>
+        <h2 className="text-lg font-semibold text-neutral-800">
+          design.md for <span className="font-mono text-neutral-600">{host}</span>
           {streaming && (
-            <span className="ml-2 animate-pulse text-sm font-normal text-indigo-500">
+            <span className="ml-2 animate-pulse text-sm font-normal text-brand">
               writing…
             </span>
           )}
@@ -57,7 +57,7 @@ export function ResultPanel({
           <button
             type="button"
             onClick={() => downloadTextFile(`${stem}.design.md`, designMd, "text/markdown")}
-            className="inline-flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50 active:bg-slate-100"
+            className="inline-flex items-center gap-1.5 rounded-md border border-neutral-300 bg-white px-3 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-50 active:bg-neutral-100"
           >
             ↓ design.md
           </button>
@@ -70,7 +70,7 @@ export function ResultPanel({
                 "application/json",
               )
             }
-            className="inline-flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50 active:bg-slate-100"
+            className="inline-flex items-center gap-1.5 rounded-md border border-neutral-300 bg-white px-3 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-50 active:bg-neutral-100"
           >
             ↓ tokens.json
           </button>
@@ -78,7 +78,7 @@ export function ResultPanel({
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 border-b border-slate-200">
+      <div className="flex gap-1 border-b border-neutral-200">
         <TabButton active={tab === "spec"} onClick={() => setTab("spec")}>
           Spec
         </TabButton>
@@ -114,8 +114,8 @@ function TabButton({
       type="button"
       className={`-mb-px border-b-2 px-4 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-50 ${
         active
-          ? "border-indigo-600 text-indigo-700"
-          : "border-transparent text-slate-500 hover:text-slate-800"
+          ? "border-brand text-brand-hover"
+          : "border-transparent text-neutral-500 hover:text-neutral-800"
       }`}
       {...rest}
     >
@@ -128,19 +128,19 @@ function SpecView({ designMd }: { designMd: string }) {
   return (
     <div className="grid gap-6 lg:grid-cols-2">
       <div className="flex flex-col">
-        <span className="mb-2 text-sm font-medium text-slate-500">
+        <span className="mb-2 text-sm font-medium text-neutral-500">
           Raw Markdown
         </span>
         <textarea
           readOnly
           value={designMd}
           spellCheck={false}
-          className="h-[28rem] w-full resize-y rounded-lg border border-slate-300 bg-white p-3 font-mono text-xs leading-relaxed text-slate-800 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+          className="h-[28rem] w-full resize-y rounded-md border border-neutral-300 bg-white p-3 font-mono text-xs leading-relaxed text-neutral-800 shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
         />
       </div>
       <div className="flex flex-col">
-        <span className="mb-2 text-sm font-medium text-slate-500">Preview</span>
-        <div className="md-preview h-[28rem] overflow-y-auto rounded-lg border border-slate-300 bg-white p-5 shadow-sm">
+        <span className="mb-2 text-sm font-medium text-neutral-500">Preview</span>
+        <div className="md-preview h-[28rem] overflow-y-auto rounded-md border border-neutral-300 bg-white p-5 shadow-sm">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{designMd}</ReactMarkdown>
         </div>
       </div>
@@ -183,7 +183,7 @@ function PreviewView({ designMd }: { designMd: string }) {
           type="button"
           onClick={generate}
           disabled={loading}
-          className="inline-flex items-center justify-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex items-center justify-center rounded-md bg-brand px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {loading
             ? "Building component…"
@@ -195,12 +195,12 @@ function PreviewView({ designMd }: { designMd: string }) {
           <button
             type="button"
             onClick={() => downloadTextFile("preview.html", html, "text/html")}
-            className="inline-flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+            className="inline-flex items-center gap-1.5 rounded-md border border-neutral-300 bg-white px-3 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-50"
           >
             ↓ preview.html
           </button>
         )}
-        <span className="text-sm text-slate-500">
+        <span className="text-sm text-neutral-500">
           Claude builds a sample UI from the spec, rendered in a sandbox.
         </span>
       </div>
@@ -212,7 +212,7 @@ function PreviewView({ designMd }: { designMd: string }) {
       )}
 
       {loading && (
-        <p className="text-sm text-indigo-600">
+        <p className="text-sm text-brand">
           Asking Claude to build a header, hero, cards, and a form from the spec…
         </p>
       )}
@@ -222,11 +222,11 @@ function PreviewView({ designMd }: { designMd: string }) {
           title="Design system preview"
           sandbox="allow-scripts"
           srcDoc={html}
-          className="h-[36rem] w-full rounded-lg border border-slate-300 bg-white shadow-sm"
+          className="h-[36rem] w-full rounded-md border border-neutral-300 bg-white shadow-sm"
         />
       ) : (
         !loading && (
-          <div className="flex h-[20rem] items-center justify-center rounded-lg border border-dashed border-slate-300 bg-slate-50 text-center text-sm text-slate-500">
+          <div className="flex h-[20rem] items-center justify-center rounded-md border border-dashed border-neutral-300 bg-neutral-50 text-center text-sm text-neutral-500">
             <p className="max-w-sm px-6">
               Generate a live component to see whether the spec actually
               reproduces this site&apos;s look. The result is rendered in a

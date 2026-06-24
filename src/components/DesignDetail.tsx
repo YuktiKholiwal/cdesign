@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { CopyButton } from "./CopyButton";
 import { InstallCommand } from "./InstallCommand";
+import { Button } from "./ui/Button";
 import { FOLLOWUP_PROMPT } from "@/lib/followupPrompt";
 import { downloadTextFile } from "@/lib/download";
 import type {
@@ -19,11 +20,7 @@ function buildFollowupWithSpec(designMd: string): string {
   return FOLLOWUP_PROMPT.replace("[PASTE design.md HERE]", designMd);
 }
 
-/**
- * The full design detail view: install command, copy/download actions, the
- * design.md spec (raw + rendered), and a live preview. Reuses the same
- * primitives as the generator's ResultPanel.
- */
+/** Full design detail view: install, copy/download, spec, and live preview. */
 export function DesignDetail({
   manifest,
   designMd,
@@ -38,13 +35,18 @@ export function DesignDetail({
   const [tab, setTab] = useState<Tab>("preview");
 
   return (
-    <section className="space-y-6">
-      <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-        <p className="text-sm font-medium text-indigo-600">Install this design</p>
-        <p className="mb-3 mt-1 text-sm text-slate-500">
-          Drops <span className="font-mono text-slate-700">design.md</span> into
-          your project (<span className="font-mono">./.claude/designs/{manifest.slug}/</span>
-          ) so your agent builds on-brand UI.
+    <section className="space-y-8">
+      <div className="card p-5">
+        <p className="font-mono text-xs uppercase tracking-wider text-neutral-400">
+          Install
+        </p>
+        <p className="mb-3 mt-1.5 text-sm text-neutral-500">
+          Drops <span className="font-mono text-neutral-700">design.md</span>{" "}
+          into{" "}
+          <span className="font-mono text-neutral-700">
+            ./.claude/designs/{manifest.slug}/
+          </span>{" "}
+          so your agent builds on-brand UI.
         </p>
         <InstallCommand slug={manifest.slug} />
 
@@ -80,24 +82,28 @@ export function DesignDetail({
         </div>
       </div>
 
-      <div className="flex gap-1 border-b border-slate-200">
-        <TabButton active={tab === "preview"} onClick={() => setTab("preview")}>
-          Live Preview
-        </TabButton>
-        <TabButton active={tab === "spec"} onClick={() => setTab("spec")}>
-          Spec
-        </TabButton>
-      </div>
+      <div>
+        <div className="flex gap-6 border-b border-line">
+          <TabButton active={tab === "preview"} onClick={() => setTab("preview")}>
+            Live Preview
+          </TabButton>
+          <TabButton active={tab === "spec"} onClick={() => setTab("spec")}>
+            Spec
+          </TabButton>
+        </div>
 
-      {tab === "spec" ? (
-        <SpecView designMd={designMd} />
-      ) : (
-        <PreviewView
-          designMd={designMd}
-          initialHtml={initialPreviewHtml}
-          slug={manifest.slug}
-        />
-      )}
+        <div className="pt-6">
+          {tab === "spec" ? (
+            <SpecView designMd={designMd} />
+          ) : (
+            <PreviewView
+              designMd={designMd}
+              initialHtml={initialPreviewHtml}
+              slug={manifest.slug}
+            />
+          )}
+        </div>
+      </div>
     </section>
   );
 }
@@ -110,13 +116,9 @@ function ActionButton({
   children: React.ReactNode;
 }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="inline-flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50 active:bg-slate-100"
-    >
+    <Button type="button" variant="secondary" size="sm" onClick={onClick}>
       {children}
-    </button>
+    </Button>
   );
 }
 
@@ -131,10 +133,10 @@ function TabButton({
   return (
     <button
       type="button"
-      className={`-mb-px border-b-2 px-4 py-2 text-sm font-medium transition ${
+      className={`-mb-px border-b-2 pb-3 text-sm font-medium transition-colors ${
         active
-          ? "border-indigo-600 text-indigo-700"
-          : "border-transparent text-slate-500 hover:text-slate-800"
+          ? "border-neutral-900 text-neutral-900"
+          : "border-transparent text-neutral-400 hover:text-neutral-900"
       }`}
       {...rest}
     >
@@ -145,21 +147,23 @@ function TabButton({
 
 function SpecView({ designMd }: { designMd: string }) {
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
+    <div className="grid gap-5 lg:grid-cols-2">
       <div className="flex flex-col">
-        <span className="mb-2 text-sm font-medium text-slate-500">
+        <span className="mb-2 font-mono text-xs uppercase tracking-wider text-neutral-400">
           Raw Markdown
         </span>
         <textarea
           readOnly
           value={designMd}
           spellCheck={false}
-          className="h-[32rem] w-full resize-y rounded-lg border border-slate-300 bg-white p-3 font-mono text-xs leading-relaxed text-slate-800 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+          className="h-[32rem] w-full resize-y rounded-xl border border-line bg-neutral-50 p-4 font-mono text-xs leading-relaxed text-neutral-700 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
         />
       </div>
       <div className="flex flex-col">
-        <span className="mb-2 text-sm font-medium text-slate-500">Rendered</span>
-        <div className="md-preview h-[32rem] overflow-y-auto rounded-lg border border-slate-300 bg-white p-5 shadow-sm">
+        <span className="mb-2 font-mono text-xs uppercase tracking-wider text-neutral-400">
+          Rendered
+        </span>
+        <div className="md-preview card h-[32rem] overflow-y-auto p-6">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{designMd}</ReactMarkdown>
         </div>
       </div>
@@ -204,32 +208,34 @@ function PreviewView({
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
-        <button
+        <Button
           type="button"
+          variant="primary"
+          size="md"
           onClick={regenerate}
           disabled={loading}
-          className="inline-flex items-center justify-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {loading
             ? "Rebuilding…"
             : html
-              ? "Regenerate preview"
-              : "Generate live preview"}
-        </button>
+              ? "Regenerate Preview"
+              : "Generate Live Preview"}
+        </Button>
         {html && (
-          <button
+          <Button
             type="button"
+            variant="secondary"
+            size="md"
             onClick={() =>
               downloadTextFile(`${slug}.preview.html`, html, "text/html")
             }
-            className="inline-flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
           >
             ↓ preview.html
-          </button>
+          </Button>
         )}
-        <span className="text-sm text-slate-500">
+        <span className="text-sm text-neutral-500">
           A sample UI built purely from this spec, rendered in a sandbox.
         </span>
       </div>
@@ -245,11 +251,11 @@ function PreviewView({
           title={`${slug} design preview`}
           sandbox="allow-scripts"
           srcDoc={html}
-          className="h-[40rem] w-full rounded-lg border border-slate-300 bg-white shadow-sm"
+          className="h-[40rem] w-full rounded-xl border border-line bg-white shadow-[0_2px_2px_rgba(0,0,0,0.04)]"
         />
       ) : (
         !loading && (
-          <div className="flex h-[20rem] items-center justify-center rounded-lg border border-dashed border-slate-300 bg-slate-50 text-center text-sm text-slate-500">
+          <div className="flex h-[20rem] items-center justify-center rounded-xl border border-dashed border-line bg-neutral-50 text-center text-sm text-neutral-500">
             <p className="max-w-sm px-6">
               No preview shipped with this design yet. Generate one to see the
               spec rendered as a live component.
