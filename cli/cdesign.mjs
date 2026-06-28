@@ -8,7 +8,7 @@
  * Options:
  *   -g, --global           Install into ~/<agent>/designs/ instead of ./<agent>/designs/
  *   -a, --agent <name>     Target agent dir: claude-code (default), cursor, opencode, windsurf
- *       --host <url>       Registry host (default: $CDESIGN_HOST or https://cdesign.sh)
+ *       --host <url>       Registry host (default: $CDESIGN_HOST or https://cdesign-orpin.vercel.app)
  *       --no-telemetry     Don't report the anonymous install
  *   -h, --help             Show this help
  *
@@ -20,7 +20,8 @@ import { promises as fs } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const DEFAULT_HOST = process.env.CDESIGN_HOST || "https://cdesign.sh";
+const DEFAULT_HOST =
+  process.env.CDESIGN_HOST || "https://cdesign-orpin.vercel.app";
 
 // Where each supported agent keeps project-scoped config. Mirrors skills.sh.
 const AGENT_DIRS = {

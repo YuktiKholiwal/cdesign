@@ -30,14 +30,15 @@ records an anonymous install. Then ask your agent to *"follow the Vercel design 
 | --- | --- |
 | `-g, --global` | Install into `~/<agent>/designs/` instead of the project. |
 | `-a, --agent <name>` | Target agent dir: `claude-code` (default), `cursor`, `opencode`, `windsurf`. |
-| `--host <url>` | Registry host. Defaults to `$CDESIGN_HOST`. |
+| `--host <url>` | Registry host. Defaults to `$CDESIGN_HOST`, then the public registry. |
 | `--no-telemetry` | Don't report the anonymous install. |
 | `-h, --help` | Show help. |
 
 ## Configuration
 
-The CLI fetches packages from the cdesign registry. Point it at a host with the
-`CDESIGN_HOST` environment variable (or `--host`):
+By default the CLI fetches from the public cdesign registry, so `npx cdesign-cli
+add vercel` works out of the box. To point it at your own deployment, set the
+`CDESIGN_HOST` environment variable (or pass `--host`):
 
 ```bash
 CDESIGN_HOST=https://your-cdesign-host npx cdesign-cli add vercel
