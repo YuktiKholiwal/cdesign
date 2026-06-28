@@ -1,6 +1,6 @@
 {
   "name": "cdesign-cli",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Install a design language into your project — npx cdesign-cli add <slug>. The CLI for the cdesign design-spec marketplace.",
   "type": "module",
   "bin": {
