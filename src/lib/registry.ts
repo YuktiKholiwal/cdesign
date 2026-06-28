@@ -16,15 +16,39 @@ import type {
  *   - tokens.json   (ExtractedDesign)
  *   - preview.html  (sample page used as a thumbnail; optional)
  *
- * Install counts live in `content/installs.json` (`{ [slug]: number }`) and are
- * bumped by the CLI via /api/installs — mirroring skills.sh's anonymous
- * install telemetry. We read the filesystem directly so pages can be React
- * Server Components with no database.
+ * Install counts have two layers:
+ *   - A committed baseline in `content/installs.json` (`{ [slug]: number }`) —
+ *     the seeded popularity numbers, read-only at runtime.
+ *   - Live deltas accumulated since deploy. On a writable filesystem (local
+ *     dev) these are folded back into the file; on Vercel — where the FS is
+ *     read-only and ephemeral — they live in Vercel KV (a Redis hash) so they
+ *     persist across cold starts and deploys. Displayed count = baseline + KV
+ *     delta.
+ *
+ * The CLI bumps a slug via /api/installs — mirroring skills.sh's anonymous
+ * install telemetry. Designs themselves are still read straight off the
+ * filesystem so pages can be React Server Components with no database.
  */
 
 const CONTENT_ROOT = path.join(process.cwd(), "content");
 const DESIGNS_DIR = path.join(CONTENT_ROOT, "designs");
 const INSTALLS_FILE = path.join(CONTENT_ROOT, "installs.json");
+
+/** Redis hash holding per-slug install deltas accumulated since deploy. */
+const KV_INSTALLS_KEY = "cdesign:install-deltas";
+
+/** KV is "configured" only when Vercel injected its REST credentials. */
+function kvConfigured(): boolean {
+  return Boolean(
+    process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN,
+  );
+}
+
+/** Lazily load the KV client so local dev never needs the dependency wired. */
+async function kvClient() {
+  const { kv } = await import("@vercel/kv");
+  return kv;
+}
 
 async function readJson<T>(file: string): Promise<T | null> {
   try {
@@ -35,25 +59,48 @@ async function readJson<T>(file: string): Promise<T | null> {
   }
 }
 
-/** Read the install-count map, tolerating a missing/corrupt file. */
-export async function readInstallCounts(): Promise<Record<string, number>> {
+/** The committed, read-only baseline counts. */
+async function readBaseline(): Promise<Record<string, number>> {
   return (await readJson<Record<string, number>>(INSTALLS_FILE)) ?? {};
 }
 
-/** Persist the install-count map (used by the installs API route). */
-export async function writeInstallCounts(
-  counts: Record<string, number>,
-): Promise<void> {
-  await fs.mkdir(CONTENT_ROOT, { recursive: true });
-  await fs.writeFile(INSTALLS_FILE, `${JSON.stringify(counts, null, 2)}\n`);
+/**
+ * Read the displayed install-count map: baseline plus any KV deltas.
+ * Storage failures never break reads — we degrade to the baseline.
+ */
+export async function readInstallCounts(): Promise<Record<string, number>> {
+  const counts = await readBaseline();
+  if (!kvConfigured()) return counts;
+
+  try {
+    const kv = await kvClient();
+    const deltas =
+      (await kv.hgetall<Record<string, number>>(KV_INSTALLS_KEY)) ?? {};
+    for (const [slug, delta] of Object.entries(deltas)) {
+      counts[slug] = (counts[slug] ?? 0) + Number(delta ?? 0);
+    }
+  } catch {
+    // Telemetry storage is best-effort; fall back to the baseline.
+  }
+  return counts;
 }
 
-/** Increment a slug's install count and return the new value. */
+/** Increment a slug's install count and return the new displayed value. */
 export async function incrementInstall(slug: string): Promise<number> {
-  const counts = await readInstallCounts();
-  const next = (counts[slug] ?? 0) + 1;
-  counts[slug] = next;
-  await writeInstallCounts(counts);
+  const baseline = await readBaseline();
+  const base = baseline[slug] ?? 0;
+
+  if (kvConfigured()) {
+    const kv = await kvClient();
+    const delta = await kv.hincrby(KV_INSTALLS_KEY, slug, 1);
+    return base + delta;
+  }
+
+  // Local dev: persist the bumped count straight back to the file.
+  const next = base + 1;
+  baseline[slug] = next;
+  await fs.mkdir(CONTENT_ROOT, { recursive: true });
+  await fs.writeFile(INSTALLS_FILE, `${JSON.stringify(baseline, null, 2)}\n`);
   return next;
 }
 
