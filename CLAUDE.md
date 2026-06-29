@@ -37,8 +37,9 @@ or `npx cdesign-cli add <slug>` then point this path at it).
 > high-contrast: near-neutral surfaces, a tonal gray scale (`gray-1000` #171717
 > primary text), a blue accent (`blue-700` #006bff) reserved for state and the
 > single key action, Geist Sans/Mono, tight 6px radii, and subtle tonal
-> elevation. (The app's current UI still uses an indigo accent and has not yet
-> been restyled to match.)
+> elevation. The app's own UI has been restyled to this spec: `tailwind.config.ts`
+> maps the brand blue, Geist fonts, and tonal elevation; `globals.css` carries the
+> hairline tokens. Use `neutral-*` for surfaces/text and `brand`/`danger` for state.
 
 ## Conventions
 - Next.js 15 App Router + React 19 + TypeScript + Tailwind 3.

@@ -1,0 +1,719 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stripe Press – Design System Demonstration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  /* ─── Reset & Base ─── */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    --bg-primary: #201819;
+    --bg-accent: #222;
+    --text-primary: #fff;
+    --text-muted: rgba(255,255,255,0.6);
+    --text-faint: rgba(255,255,255,0.35);
+    --border-subtle: rgba(255,255,255,0.12);
+    --font-serif: 'EB Garamond', 'Ivar Text', Georgia, serif;
+    --spacing-1: 6px;
+    --spacing-2: 12px;
+    --spacing-3: 18px;
+    --spacing-4: 24px;
+    --spacing-6: 36px;
+    --spacing-8: 48px;
+    --spacing-12: 72px;
+    --spacing-16: 96px;
+    --letter-spacing-ui: 0.32px;
+    --radius: 0px;
+  }
+
+  html {
+    font-size: 17px;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-serif);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+  }
+
+  /* ─── Typography Utilities ─── */
+  .font-headline {
+    font-family: var(--font-serif);
+    font-weight: 600;
+  }
+
+  .font-body {
+    font-family: var(--font-serif);
+    font-weight: 400;
+  }
+
+  .text-muted {
+    color: var(--text-muted);
+  }
+
+  .text-faint {
+    color: var(--text-faint);
+  }
+
+  /* ─── Layout Containers ─── */
+  .container {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-4);
+  }
+
+  .container--narrow {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-4);
+  }
+
+  /* ─── Navigation / Header ─── */
+  .site-header {
+    background-color: var(--bg-primary);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: var(--spacing-4) 0;
+    position: static;
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-4);
+  }
+
+  .site-header__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .site-header__brand h1 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: var(--letter-spacing-ui);
+    color: var(--text-primary);
+    line-height: 1.2;
+  }
+
+  .site-header__brand h2 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: var(--letter-spacing-ui);
+    color: var(--text-muted);
+    line-height: 1.2;
+  }
+
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-6);
+    list-style: none;
+  }
+
+  .site-nav__item a {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 15px;
+    letter-spacing: var(--letter-spacing-ui);
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .site-nav__item a:hover {
+    color: var(--text-primary);
+  }
+
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+  }
+
+  /* ─── Buttons ─── */
+  .btn {
+    display: inline-block;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: var(--letter-spacing-ui);
+    border-radius: var(--radius);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    border: none;
+    background: none;
+    padding: 0;
+    line-height: 1;
+  }
+
+  .btn--primary {
+    background-color: var(--text-primary);
+    color: var(--bg-primary);
+    padding: 13px 24px;
+    border: 1px solid var(--text-primary);
+  }
+
+  .btn--primary:hover {
+    background-color: rgba(255,255,255,0.88);
+    border-color: rgba(255,255,255,0.88);
+  }
+
+  .btn--secondary {
+    background-color: transparent;
+    color: var(--text-primary);
+    padding: 13px 24px;
+    border: 1px solid var(--border-subtle);
+  }
+
+  .btn--secondary:hover {
+    border-color: rgba(255,255,255,0.45);
+    color: var(--text-primary);
+  }
+
+  .btn--text {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    padding: 0;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: var(--letter-spacing-ui);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--text-faint);
+    transition: color 0.15s ease;
+  }
+
+  .btn--text:hover {
+    color: var(--text-primary);
+    text-decoration-color: var(--text-muted);
+  }
+
+  /* ─── Section Divider ─── */
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    margin: 0;
+  }
+
+  /* ─── Hero Section ─── */
+  .hero {
+    padding: var(--spacing-16) 0 var(--spacing-12);
+    text-align: center;
+  }
+
+  .hero__eyebrow {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: var(--spacing-4);
+    display: block;
+  }
+
+  .hero__heading {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-4);
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero__subtext {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    max-width: 520px;
+    margin: 0 auto var(--spacing-8);
+  }
+
+  .hero__actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-3);
+    flex-wrap: wrap;
+  }
+
+  /* ─── Section Label ─── */
+  .section-label {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: var(--spacing-6);
+    display: block;
+  }
+
+  /* ─── Cards Section ─── */
+  .cards-section {
+    padding: var(--spacing-12) 0;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .cards-section__header {
+    margin-bottom: var(--spacing-8);
+  }
+
+  .cards-section__title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: var(--letter-spacing-ui);
+    color: var(--text-primary);
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background-color: var(--border-subtle);
+  }
+
+  @media (max-width: 700px) {
+    .cards-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .site-nav {
+      display: none;
+    }
+  }
+
+  .card {
+    background-color: var(--bg-primary);
+    padding: var(--spacing-6) var(--spacing-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+  }
+
+  .card:hover {
+    background-color: var(--bg-accent);
+  }
+
+  .card__cover {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    max-width: 120px;
+    background-color: var(--bg-accent);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--spacing-2);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .card__cover svg {
+    opacity: 0.25;
+  }
+
+  .card__cover--blue {
+    background-color: #1a2535;
+  }
+
+  .card__cover--green {
+    background-color: #1a2820;
+  }
+
+  .card__cover--rust {
+    background-color: #2a1a12;
+  }
+
+  .card__number {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    color: var(--text-faint);
+    text-transform: uppercase;
+  }
+
+  .card__title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.05rem;
+    line-height: 1.3;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+
+  .card__author {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .card__description {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+    flex-grow: 1;
+  }
+
+  .card__action {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: var(--letter-spacing-ui);
+    color: var(--text-primary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 2px;
+    align-self: flex-start;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .card__action:hover {
+    border-color: var(--text-muted);
+  }
+
+  /* ─── Form Section ─── */
+  .form-section {
+    padding: var(--spacing-12) 0 var(--spacing-16);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .form-section__header {
+    margin-bottom: var(--spacing-8);
+  }
+
+  .form-section__heading {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.55rem;
+    line-height: 1.25;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-2);
+    letter-spacing: -0.01em;
+  }
+
+  .form-section__subtext {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 460px;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+    max-width: 460px;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+  }
+
+  .form-field__label {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: var(--letter-spacing-ui);
+    color: var(--text-muted);
+    text-transform: none;
+  }
+
+  .form-field__input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    color: var(--text-primary);
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 1rem;
+    padding: var(--spacing-2) 0;
+    outline: none;
+    transition: border-color 0.15s ease;
+    width: 100%;
+    caret-color: var(--text-primary);
+  }
+
+  .form-field__input::placeholder {
+    color: var(--text-faint);
+    font-style: italic;
+  }
+
+  .form-field__input:focus {
+    border-bottom-color: rgba(255,255,255,0.5);
+  }
+
+  .form-field__hint {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--text-faint);
+    font-style: italic;
+  }
+
+  .form__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    flex-wrap: wrap;
+  }
+
+  /* ─── Footer ─── */
+  .site-footer {
+    border-top: 1px solid var(--border-subtle);
+    padding: var(--spacing-8) 0;
+  }
+
+  .site-footer__inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--spacing-3);
+  }
+
+  .site-footer__copy {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--text-faint);
+    letter-spacing: 0.2px;
+  }
+
+  .site-footer__links {
+    display: flex;
+    gap: var(--spacing-4);
+    list-style: none;
+  }
+
+  .site-footer__links a {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--text-faint);
+    text-decoration: none;
+    letter-spacing: 0.2px;
+    transition: color 0.15s ease;
+  }
+
+  .site-footer__links a:hover {
+    color: var(--text-muted);
+  }
+
+  /* ─── Design System Label ─── */
+  .ds-label {
+    display: inline-block;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    border: 1px solid var(--border-subtle);
+    padding: 3px 7px;
+    margin-bottom: var(--spacing-8);
+  }
+</style>
+</head>
+<body>
+
+  <!-- ─── Navigation / Header ─── -->
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <div class="site-header__brand">
+        <h1>Stripe Press</h1>
+        <h2>Ideas for progress</h2>
+      </div>
+
+      <nav role="navigation" aria-label="Primary navigation">
+        <ul class="site-nav">
+          <li class="site-nav__item"><a href="#">Books</a></li>
+          <li class="site-nav__item"><a href="#">Authors</a></li>
+          <li class="site-nav__item"><a href="#">About</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-header__actions">
+        <a href="#" class="btn btn--secondary" style="font-size:13px; padding: 9px 18px;">Browse titles</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─── Hero Section ─── -->
+  <section class="hero" aria-label="Hero">
+    <div class="container--narrow">
+      <span class="hero__eyebrow">A publishing imprint by Stripe</span>
+      <h1 class="hero__heading">Books that matter to the builders of the future</h1>
+      <p class="hero__subtext">
+        Stripe Press publishes works on the forces shaping technology, economics, and society — chosen for clarity of thought and endurance of argument.
+      </p>
+      <div class="hero__actions">
+        <a href="#" class="btn btn--primary">Explore the catalog</a>
+        <a href="#" class="btn btn--secondary">Our reading list</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Cards Section ─── -->
+  <section class="cards-section" aria-label="Featured books">
+    <div class="container">
+      <div class="cards-section__header">
+        <span class="section-label">Selected titles</span>
+        <p class="cards-section__title">Works of lasting consequence</p>
+      </div>
+
+      <div class="cards-grid" role="list">
+
+        <!-- Card 1 -->
+        <article class="card" role="listitem">
+          <div class="card__cover card__cover--blue" aria-hidden="true">
+            <svg width="36" height="48" viewBox="0 0 36 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="4" width="28" height="40" stroke="white" stroke-width="1.5"/>
+              <line x1="9" y1="14" x2="27" y2="14" stroke="white" stroke-width="1"/>
+              <line x1="9" y1="20" x2="27" y2="20" stroke="white" stroke-width="1"/>
+              <line x1="9" y1="26" x2="20" y2="26" stroke="white" stroke-width="1"/>
+            </svg>
+          </div>
+          <span class="card__number">001</span>
+          <h3 class="card__title">The Dream Machine</h3>
+          <p class="card__author">M. Mitchell Waldrop</p>
+          <p class="card__description">
+            The story of J.C.R. Licklider, the visionary who set the course for modern computing and the culture of the internet decades before either existed.
+          </p>
+          <a href="#" class="card__action">Read more</a>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="card" role="listitem">
+          <div class="card__cover card__cover--green" aria-hidden="true">
+            <svg width="36" height="48" viewBox="0 0 36 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="4" width="28" height="40" stroke="white" stroke-width="1.5"/>
+              <line x1="9" y1="14" x2="27" y2="14" stroke="white" stroke-width="1"/>
+              <line x1="9" y1="20" x2="27" y2="20" stroke="white" stroke-width="1"/>
+              <line x1="9" y1="26" x2="20" y2="26" stroke="white" stroke-width="1"/>
+            </svg>
+          </div>
+          <span class="card__number">002</span>
+          <h3 class="card__title">Stubborn Attachments</h3>
+          <p class="card__author">Tyler Cowen</p>
+          <p class="card__description">
+            A work of moral philosophy arguing that economic growth and human rights are the two most important values for building a better long-run future.
+          </p>
+          <a href="#" class="card__action">Read more</a>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="card" role="listitem">
+          <div class="card__cover card__cover--rust" aria-hidden="true">
+            <svg width="36" height="48" viewBox="0 0 36 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="4" width="28" height="40" stroke="white" stroke-width="1.5"/>
+              <line x1="9" y1="14" x2="27" y2="14" stroke="white" stroke-width="1"/>
+              <line x1="9" y1="20" x2="27" y2="20" stroke="white" stroke-width="1"/>
+              <line x1="9" y1="26" x2="20" y2="26" stroke="white" stroke-width="1"/>
+            </svg>
+          </div>
+          <span class="card__number">003</span>
+          <h3 class="card__title">Poor Charlie's Almanack</h3>
+          <p class="card__author">Charles T. Munger</p>
+          <p class="card__description">
+            The collected wit and wisdom of Charlie Munger — investor, thinker, and partner to Warren Buffett — on the art of making decisions under uncertainty.
+          </p>
+          <a href="#" class="card__action">Read more</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Form Section ─── -->
+  <section class="form-section" aria-label="Newsletter signup">
+    <div class="container">
+      <div class="form-section__header">
+        <span class="section-label">Stay informed</span>
+        <h2 class="form-section__heading">New titles and dispatches</h2>
+        <p class="form-section__subtext">
+          Receive word of new publications, author notes, and occasional reading recommendations. No noise.
+        </p>
+      </div>
+
+      <form class="form" novalidate aria-label="Email signup form">
+        <div class="form-field">
+          <label for="email-input" class="form-field__label">Email address</label>
+          <input
+            id="email-input"
+            class="form-field__input"
+            type="email"
+            name="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+            aria-describedby="email-hint"
+          >
+          <span id="email-hint" class="form-field__hint">Used only to send you Stripe Press updates.</span>
+        </div>
+
+        <div class="form__actions">
+          <button type="submit" class="btn btn--primary">Subscribe</button>
+          <button type="reset" class="btn btn--text">Clear</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ─── Footer ─── -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+      <span class="site-footer__copy">© Stripe Press. All rights reserved.</span>
+      <ul class="site-footer__links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>

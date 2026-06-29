@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notion Design System — Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-gray-900: #191918;
+    --color-gray-200: #f6f5f4;
+    --color-gray-100: #f9f9f8;
+    --color-gray-300: #dfdcd9;
+    --color-red-500: #f64932;
+    --color-red-100: #fef3f1;
+    --text-color-regular: rgb(4, 4, 4);
+    --text-color-dark: rgb(17, 17, 17);
+    --text-color-medium: rgba(0,0,0,0.60);
+    --text-color-light: rgba(0,0,0,0.40);
+    --text-color-extra-light: rgba(0,0,0,0.20);
+    --border-color-regular: rgba(0,0,0,0.08);
+    --font-family-sans: 'Inter', sans-serif;
+    --shadow-card: 0 2px 8px rgba(0,0,0,0.08);
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-family-sans);
+    background-color: var(--color-gray-100);
+    color: var(--text-color-regular);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Container ── */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ── NAVIGATION ── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--color-gray-100);
+    border-bottom: 1px solid var(--border-color-regular);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    gap: 16px;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--text-color-dark);
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.3px;
+    flex-shrink: 0;
+  }
+
+  .nav-logo-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    color: var(--text-color-medium);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .nav-links a:hover {
+    color: var(--text-color-dark);
+    background-color: var(--color-gray-200);
+  }
+
+  .nav-links .chevron {
+    width: 10px;
+    height: 10px;
+    opacity: 0.4;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-family: var(--font-family-sans);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 999px;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .btn:focus-visible {
+    outline: 2px solid var(--color-red-500);
+    outline-offset: 2px;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-color-medium);
+  }
+
+  .btn-ghost:hover {
+    background-color: var(--color-gray-200);
+    color: var(--text-color-dark);
+  }
+
+  .btn-secondary {
+    background-color: var(--color-gray-200);
+    color: var(--text-color-dark);
+    border: 1px solid var(--border-color-regular);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-gray-300);
+  }
+
+  .btn-primary {
+    background-color: var(--color-gray-900);
+    color: #ffffff;
+  }
+
+  .btn-primary:hover {
+    background-color: #2e2e2c;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  }
+
+  .btn-accent {
+    background-color: var(--color-red-500);
+    color: #ffffff;
+  }
+
+  .btn-accent:hover {
+    background-color: #d93d29;
+    box-shadow: 0 2px 8px rgba(246,73,50,0.3);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 96px 24px 80px;
+    text-align: center;
+    background-color: var(--color-gray-100);
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-red-500);
+    background-color: var(--color-red-100);
+    border-radius: 999px;
+    padding: 4px 12px;
+    margin-bottom: 24px;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--color-red-500);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .hero h1 {
+    font-size: 56px;
+    font-weight: 800;
+    color: var(--text-color-dark);
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-bottom: 20px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (max-width: 640px) {
+    .hero h1 {
+      font-size: 36px;
+      letter-spacing: -0.8px;
+    }
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-color-medium);
+    max-width: 520px;
+    margin: 0 auto 36px;
+    line-height: 1.65;
+    font-weight: 400;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .hero-actions .btn {
+    font-size: 15px;
+    padding: 12px 24px;
+  }
+
+  .hero-note {
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--text-color-light);
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border-color-regular);
+    margin: 0;
+  }
+
+  /* ── CARDS SECTION ── */
+  .cards-section {
+    padding: 72px 24px;
+    background-color: var(--color-gray-100);
+  }
+
+  .section-label {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-color-light);
+    margin-bottom: 12px;
+  }
+
+  .section-heading {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-color-dark);
+    letter-spacing: -0.6px;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .section-sub {
+    text-align: center;
+    font-size: 16px;
+    color: var(--text-color-medium);
+    max-width: 480px;
+    margin: 0 auto 48px;
+    line-height: 1.6;
+  }
+
+  .cards-grid {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .card {
+    flex: 1 1 280px;
+    background-color: var(--color-gray-200);
+    border: 1px solid var(--border-color-regular);
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: var(--shadow-card);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    transform: translateY(-2px);
+  }
+
+  .card-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .card-icon-wrap.red {
+    background-color: var(--color-red-100);
+  }
+
+  .card-icon-wrap.gray {
+    background-color: var(--color-gray-300);
+  }
+
+  .card-icon-wrap.dark {
+    background-color: var(--color-gray-900);
+  }
+
+  .card-icon-wrap svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-color-dark);
+    letter-spacing: -0.2px;
+    line-height: 1.3;
+  }
+
+  .card-title a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .card-title a:hover {
+    color: var(--color-red-500);
+  }
+
+  .card-desc {
+    font-size: 14px;
+    color: var(--text-color-medium);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .card-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--text-color-light);
+    background-color: var(--color-gray-100);
+    border: 1px solid var(--border-color-regular);
+    border-radius: 4px;
+    padding: 3px 8px;
+    align-self: flex-start;
+  }
+
+  /* ── FORM SECTION ── */
+  .form-section {
+    padding: 72px 24px;
+    background-color: var(--color-gray-200);
+    border-top: 1px solid var(--border-color-regular);
+  }
+
+  .form-wrap {
+    max-width: 480px;
+    margin: 0 auto;
+    background-color: var(--color-gray-100);
+    border: 1px solid var(--border-color-regular);
+    border-radius: 8px;
+    padding: 36px 32px;
+    box-shadow: var(--shadow-card);
+  }
+
+  .form-heading {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-color-dark);
+    letter-spacing: -0.4px;
+    margin-bottom: 6px;
+  }
+
+  .form-sub {
+    font-size: 14px;
+    color: var(--text-color-medium);
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .form-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-color-medium);
+    letter-spacing: 0.01em;
+  }
+
+  .form-input {
+    font-family: var(--font-family-sans);
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-color-dark);
+    background-color: #ffffff;
+    border: 1px solid var(--border-color-regular);
+    border-radius: 6px;
+    padding: 11px 14px;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    width: 100%;
+  }
+
+  .form-input::placeholder {
+    color: var(--text-color-light);
+  }
+
+  .form-input:focus {
+    border-color: rgba(0,0,0,0.20);
+    box-shadow: 0 0 0 3px rgba(246,73,50,0.10);
+  }
+
+  .form-helper {
+    font-size: 12px;
+    color: var(--text-color-light);
+    margin-top: 2px;
+  }
+
+  .form-submit {
+    width: 100%;
+    margin-top: 8px;
+    font-size: 15px;
+    padding: 13px 24px;
+    border-radius: 999px;
+  }
+
+  .form-footer {
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--text-color-light);
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    padding: 28px 24px;
+    border-top: 1px solid var(--border-color-regular);
+    background-color: var(--color-gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .site-footer-copy {
+    font-size: 13px;
+    color: var(--text-color-light);
+  }
+
+  .site-footer-links {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    flex-wrap: wrap;
+  }
+
+  .site-footer-links a {
+    font-size: 13px;
+    color: var(--text-color-light);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .site-footer-links a:hover {
+    color: var(--text-color-medium);
+  }
+
+  /* ── RESPONSIVE HELPERS ── */
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+
+    .hero {
+      padding: 64px 20px 56px;
+    }
+
+    .hero-sub {
+      font-size: 16px;
+    }
+
+    .cards-section,
+    .form-section {
+      padding: 56px 20px;
+    }
+
+    .cards-grid {
+      flex-direction: column;
+    }
+
+    .card {
+      flex: 1 1 auto;
+    }
+
+    .form-wrap {
+      padding: 28px 22px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<header>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="container nav-inner">
+
+      <!-- Logo -->
+      <a href="#" class="nav-logo" aria-label="Notion home">
+        <svg class="nav-logo-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="28" height="28" rx="5" fill="#191918"/>
+          <path d="M8 8h5l7 9V8h2v12h-5L10 11v9H8V8z" fill="white"/>
+        </svg>
+        Notion
+      </a>
+
+      <!-- Nav links -->
+      <ul class="nav-links" role="list">
+        <li>
+          <a href="#" aria-haspopup="true" aria-expanded="false">
+            Product
+            <svg class="chevron" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+              <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" aria-haspopup="true" aria-expanded="false">
+            Solutions
+            <svg class="chevron" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+              <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+        <li><a href="#">Templates</a></li>
+        <li><a href="#">Pricing</a></li>
+        <li>
+          <a href="#" aria-haspopup="true" aria-expanded="false">
+            Resources
+            <svg class="chevron" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+              <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Actions -->
+      <div class="nav-actions">
+        <a href="#" class="btn btn-ghost">Log in</a>
+        <a href="#" class="btn btn-primary">Get Notion free</a>
+      </div>
+
+    </div>
+  </nav>
+</header>
+
+<!-- ── HERO ── -->
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="container">
+    <div class="hero-eyebrow" role="text">
+      <span class="hero-eyebrow-dot" aria-hidden="true"></span>
+      Introducing Notion AI
+    </div>
+    <h1 id="hero-heading">Work moves fast.<br>Keep up.</h1>
+    <p class="hero-sub">
+      One workspace for notes, docs, projects, and wikis — with AI built in to help your team think and ship faster.
+    </p>
+    <div class="hero-actions">
+      <a href="#" class="btn btn-accent">Get Notion free</a>
+      <a href="#" class="btn btn-secondary">Request a demo</a>
+    </div>
+    <p class="hero-note">Free to start &middot; No credit card required</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ── CARDS ── -->
+<section class="cards-section" aria-labelledby="cards-heading">
+  <div class="container">
+    <p class="section-label">Why Notion</p>
+    <h2 class="section-heading" id="cards-heading">Everything in one place</h2>
+    <p class="section-sub">Replace the scattered stack. Notion brings docs, wikis, and projects into one calm, connected workspace.</p>
+
+    <div class="cards-grid">
+
+      <!-- Card 1 -->
+      <article class="card">
+        <div class="card-icon-wrap red" aria-hidden="true">
+          <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 5h14M4 9h10M4 13h12M4 17h8" stroke="#f64932" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="card-title"><a href="#">Docs &amp; wikis</a></h3>
+        <p class="card-desc">Write, organize, and share knowledge that actually sticks. Build a living wiki your whole team can trust.</p>
+        <span class="card-tag">Knowledge base</span>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="card">
+        <div class="card-icon-wrap dark" aria-hidden="true">
+          <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="3" width="7" height="7" rx="1.5" fill="white"/>
+            <rect x="12" y="3" width="7" height="7" rx="1.5" fill="white" opacity="0.5"/>
+            <rect x="3" y="12" width="7" height="7" rx="1.5" fill="white" opacity="0.5"/>
+            <rect x="12" y="12" width="7" height="7" rx="1.5" fill="white" opacity="0.25"/>
+          </svg>
+        </div>
+        <h3 class="card-title"><a href="#">Projects &amp; tasks</a></h3>
+        <p class="card-desc">Plan sprints, track deliverables, and manage roadmaps — all without switching between five different tools.</p>
+        <span class="card-tag">Project management</span>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="card">
+        <div class="card-icon-wrap gray" aria-hidden="true">
+          <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11" cy="8" r="3.5" stroke="#191918" stroke-width="1.8"/>
+            <path d="M4 18c0-3.314 3.134-6 7-6s7 2.686 7 6" stroke="#191918" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="card-title"><a href="#">AI teammates</a></h3>
+        <p class="card-desc">Meet the agents that keep work moving 24/7. Autofill, summarize, and surface what matters — automatically.</p>
+        <span class="card-tag">Notion AI</span>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ── FORM ── -->
+<section class="form-section" aria-labelledby="form-heading">
+  <div class="container">
+    <div class="form-wrap">
+      <h2 class="form-heading" id="form-heading">Stay in the loop</h2>
+      <p class="form-sub">Get product updates and tips delivered straight to your inbox. No noise, just signal.</p>
+
+      <form novalidate>
+        <div class="form-group">
+          <label class="form-label" for="email-input">Work email</label>
+          <input
+            class="form-input"
+            type="email"
+            id="email-input"
+            name="email"
+            placeholder="you@company.com"
+            autocomplete="email"
+            required
+            aria-describedby="email-helper"
+          >
+          <span class="form-helper" id="email-helper">We'll never share your email with anyone.</span>
+        </div>
+
+        <button type="submit" class="btn btn-accent form-submit">
+          Subscribe for free
+        </button>
+      </form>
+
+      <p class="form-footer">By subscribing you agree to our Privacy Policy. Unsubscribe at any time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer">
+  <p class="site-footer-copy">&copy; 2024 Notion Labs, Inc.</p>
+  <ul class="site-footer-links" role="list">
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Terms</a></li>
+    <li><a href="#">Security</a></li>
+    <li><a href="#">Status</a></li>
+    <li><a href="#">Careers</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>

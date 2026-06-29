@@ -1,0 +1,14 @@
+{
+  "slug": "github",
+  "title": "GitHub",
+  "author": "cdesign",
+  "description": "GitHub's marketing and product UI is clean, professional, and developer-focused. It favors high contrast, functional clarity, and a light default theme with strong semantic color use. The tone is auth",
+  "topics": [
+    "developer-tools",
+    "dark",
+    "product"
+  ],
+  "source": "https://github.com",
+  "version": "1.0.0",
+  "createdAt": "2026-06-29T00:15:17.755Z"
+}

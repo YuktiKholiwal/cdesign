@@ -1,0 +1,14 @@
+{
+  "slug": "airbnb",
+  "title": "Airbnb",
+  "author": "cdesign",
+  "description": "Warm, approachable, and polished. The design balances a consumer-facing friendliness (soft neutrals, rounded corners, generous white space) with professional clarity. The brand conveys trust and ease ",
+  "topics": [
+    "consumer",
+    "travel",
+    "friendly"
+  ],
+  "source": "https://www.airbnb.com",
+  "version": "1.0.0",
+  "createdAt": "2026-06-29T00:23:05.062Z"
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "apple",
+  "title": "Apple",
+  "author": "cdesign",
+  "description": "Clean, minimal, and premium. The design communicates quiet confidence through generous whitespace, precise typography, and a near-monochromatic palette punctuated by selective use of blue links and de",
+  "topics": [
+    "consumer",
+    "premium",
+    "minimal"
+  ],
+  "source": "https://www.apple.com",
+  "version": "1.0.0",
+  "createdAt": "2026-06-29T00:17:53.143Z"
+}

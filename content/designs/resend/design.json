@@ -1,0 +1,14 @@
+{
+  "slug": "resend",
+  "title": "Resend",
+  "author": "cdesign",
+  "description": "Resend projects a sleek, modern developer-tool aesthetic — dark-first, minimal, and precise. The visual language is technical yet refined, combining editorial typography with stark contrast and subtle",
+  "topics": [
+    "developer-tools",
+    "minimal",
+    "email"
+  ],
+  "source": "https://resend.com",
+  "version": "1.0.0",
+  "createdAt": "2026-06-29T00:15:33.199Z"
+}

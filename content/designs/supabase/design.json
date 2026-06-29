@@ -1,0 +1,14 @@
+{
+  "slug": "supabase",
+  "title": "Supabase",
+  "author": "cdesign",
+  "description": "Supabase presents as a modern, developer-focused product with a dark-mode-first aesthetic. The UI is clean and technical, balancing utility with polish — comfortable for engineers but approachable eno",
+  "topics": [
+    "developer-tools",
+    "dark",
+    "database"
+  ],
+  "source": "https://supabase.com",
+  "version": "1.0.0",
+  "createdAt": "2026-06-29T00:13:00.077Z"
+}

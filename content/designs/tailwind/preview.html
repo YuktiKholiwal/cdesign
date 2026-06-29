@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Design System Demo – tailwindcss.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --primary: #316ff6;
+    --accent: #00d2ef;
+    --bg-page: #f9fafb;
+    --bg-dark: #0f1116;
+    --bg-surface-dark: #1b1b1c;
+    --text-main: #000000d9;
+    --text-muted: #00000080;
+    --border-subtle: #6a728240;
+    --border-subtle-light: #99a1af1a;
+    --font-base: 'Inter', system-ui, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+    --radius-2xl: 16px;
+    --radius-pill: 9999px;
+    --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.06);
+  }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-base);
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── NAVBAR ─────────────────────────────────────────────────── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(249, 250, 251, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-subtle);
+    height: 60px;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-inner {
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .nav-logo-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-logo-text {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.01em;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .nav-links a:hover { color: var(--text-main); }
+  .nav-links a.active { color: var(--primary); }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .badge-version {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--primary);
+    background: rgba(49, 111, 246, 0.08);
+    border: 1px solid rgba(49, 111, 246, 0.18);
+    border-radius: var(--radius-2xl);
+    padding: 2px 10px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-base);
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+    border-radius: var(--radius-lg);
+    padding: 8px 16px;
+    line-height: 1.4;
+  }
+
+  .btn:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  .btn-primary {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-primary:hover {
+    background: #2660e8;
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-secondary {
+    background: rgba(3, 7, 18, 0.05);
+    color: var(--text-main);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(3, 7, 18, 0.09);
+  }
+
+  .btn-sm {
+    font-size: 13px;
+    padding: 5px 12px;
+    border-radius: var(--radius-md);
+  }
+
+  .btn-lg {
+    font-size: 15px;
+    padding: 10px 22px;
+    border-radius: var(--radius-lg);
+  }
+
+  /* ─── HERO ────────────────────────────────────────────────────── */
+  .hero {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 80px 24px 88px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(0, 210, 239, 0.08);
+    border: 1px solid rgba(0, 210, 239, 0.25);
+    border-radius: var(--radius-pill);
+    padding: 4px 12px;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-size: 46px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: #000c;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 .highlight {
+    color: var(--primary);
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-bottom: 36px;
+    max-width: 480px;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .hero-visual {
+    background: var(--bg-dark);
+    border-radius: var(--radius-2xl);
+    border: 1px solid rgba(106, 114, 130, 0.25);
+    box-shadow: var(--shadow-md), 0 0 0 1px rgba(0,0,0,0.04);
+    padding: 24px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.7;
+    overflow: hidden;
+  }
+
+  .hero-visual-bar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .dot-red { background: #fb2c36; }
+  .dot-yellow { background: #f5a623; }
+  .dot-green { background: #22c55e; }
+
+  .code-line { display: block; white-space: pre; }
+  .c-comment { color: #6a7280; }
+  .c-tag { color: #00d2ef; }
+  .c-attr { color: #a5b4fc; }
+  .c-val { color: #86efac; }
+  .c-plain { color: #e2e8f0; }
+
+  /* ─── SECTION WRAPPER ─────────────────────────────────────────── */
+  .section {
+    padding: 72px 24px;
+  }
+
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+    margin-bottom: 12px;
+  }
+
+  .section-desc {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 48px;
+    max-width: 520px;
+  }
+
+  /* ─── CARDS ───────────────────────────────────────────────────── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid rgba(106, 114, 130, 0.18);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+    flex-shrink: 0;
+  }
+
+  .card-icon-blue { background: rgba(49, 111, 246, 0.1); }
+  .card-icon-cyan { background: rgba(0, 210, 239, 0.1); }
+  .card-icon-purple { background: rgba(139, 92, 246, 0.1); }
+
+  .card-title {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text-main);
+  }
+
+  .card-body {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid rgba(106, 114, 130, 0.12);
+  }
+
+  .tag {
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: var(--radius-pill);
+    padding: 2px 10px;
+  }
+
+  .tag-blue {
+    background: rgba(49, 111, 246, 0.08);
+    color: var(--primary);
+    border: 1px solid rgba(49, 111, 246, 0.18);
+  }
+
+  .tag-cyan {
+    background: rgba(0, 210, 239, 0.08);
+    color: #009db3;
+    border: 1px solid rgba(0, 210, 239, 0.25);
+  }
+
+  .tag-purple {
+    background: rgba(139, 92, 246, 0.08);
+    color: #7c3aed;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+  }
+
+  .card-link {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: gap 0.15s ease;
+  }
+
+  .card-link:hover { gap: 6px; }
+
+  /* ─── FORM SECTION ────────────────────────────────────────────── */
+  .form-section {
+    background: #fff;
+    border: 1px solid rgba(106, 114, 130, 0.18);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-sm);
+    padding: 40px 40px 44px;
+    max-width: 520px;
+  }
+
+  .form-section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin-bottom: 6px;
+    color: var(--text-main);
+  }
+
+  .form-section p {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    line-height: 1.55;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  label {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(0,0,0,0.65);
+  }
+
+  .form-input {
+    font-family: var(--font-base);
+    font-size: 14px;
+    color: var(--text-main);
+    background: #fff;
+    border: 1px solid rgba(106, 114, 130, 0.35);
+    border-radius: var(--radius-md);
+    padding: 9px 12px;
+    width: 100%;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    outline: none;
+    appearance: none;
+  }
+
+  .form-input::placeholder { color: var(--text-muted); }
+
+  .form-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(49, 111, 246, 0.12);
+  }
+
+  .form-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .form-submit-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .btn-submit {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-family: var(--font-base);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 22px;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: background 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .btn-submit:hover {
+    background: #2660e8;
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-submit:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  .form-cancel {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px 4px;
+    transition: color 0.15s ease;
+  }
+
+  .form-cancel:hover { color: var(--text-main); }
+
+  /* ─── DARK SECTION ────────────────────────────────────────────── */
+  .dark-section {
+    background: var(--bg-dark);
+    border-top: 1px solid rgba(106, 114, 130, 0.15);
+    border-bottom: 1px solid rgba(106, 114, 130, 0.15);
+  }
+
+  .dark-section .section-title { color: #fff; }
+  .dark-section .section-desc { color: #99a1af; }
+  .dark-section .section-label { color: var(--accent); }
+
+  .dark-card {
+    background: var(--bg-surface-dark);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-xl);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .dark-card:hover {
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 0 0 1px rgba(49, 111, 246, 0.15), var(--shadow-md);
+  }
+
+  .dark-card .card-title { color: #fff; }
+  .dark-card .card-body { color: #99a1af; }
+  .dark-card .card-meta { border-top-color: rgba(255,255,255,0.06); }
+
+  /* ─── DIVIDER ─────────────────────────────────────────────────── */
+  .divider {
+    max-width: 1280px;
+    margin: 0 auto;
+    height: 1px;
+    background: var(--border-subtle);
+  }
+
+  /* ─── FOOTER ──────────────────────────────────────────────────── */
+  .footer {
+    background: var(--bg-dark);
+    padding: 40px 24px;
+    color: #99a1af;
+    font-size: 13px;
+  }
+
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .footer-mark {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    color: #99a1af;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .footer-links a:hover { color: #fff; }
+
+  /* ─── RESPONSIVE ──────────────────────────────────────────────── */
+  @media (max-width: 1023px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 48px;
+      padding: 60px 24px 72px;
+    }
+    .hero h1 { font-size: 36px; }
+    .cards-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 767px) {
+    .nav-links { display: none; }
+    .hero h1 { font-size: 30px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .section-title { font-size: 24px; }
+    .form-section { padding: 28px 24px 32px; }
+    .hero-visual { display: none; }
+  }
+
+  @media (max-width: 639px) {
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVIGATION
+════════════════════════════════════════════════ -->
+<header>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" aria-label="Tailwind CSS home">
+        <div class="nav-logo-mark" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 3C6.6 3 5.1 4.2 4.5 6.6C5.4 5.4 6.45 4.95 7.65 5.25C8.354 5.431 8.851 5.934 9.4 6.491C10.304 7.408 11.355 8.47 13.5 8.47C15.9 8.47 17.4 7.27 18 4.87C17.1 6.07 16.05 6.52 14.85 6.22C14.146 6.039 13.649 5.536 13.1 4.979C12.196 4.062 11.145 3 9 3ZM4.5 8.47C2.1 8.47 0.6 9.67 0 12.07C0.9 10.87 1.95 10.42 3.15 10.72C3.854 10.901 4.351 11.404 4.9 11.961C5.804 12.878 6.855 13.94 9 13.94C11.4 13.94 12.9 12.74 13.5 10.34C12.6 11.54 11.55 11.99 10.35 11.69C9.646 11.509 9.149 11.006 8.6 10.449C7.696 9.532 6.645 8.47 4.5 8.47Z" fill="white"/>
+          </svg>
+        </div>
+        <span class="nav-logo-text">Tailwind CSS</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#" class="active">Docs</a></li>
+        <li><a href="#">Components</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Showcase</a></li>
+        <li><a href="#">Playground</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <span class="badge-version">v4.1</span>
+        <a href="#" class="btn btn-secondary btn-sm">View source</a>
+        <a href="#" class="btn btn-primary btn-sm">Get started</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- ═══════════════════════════════════════════
+     HERO SECTION
+════════════════════════════════════════════════ -->
+<main>
+  <section aria-label="Hero" style="max-width:1280px;margin:0 auto;">
+    <div class="hero">
+      <div class="hero-content">
+        <div class="hero-eyebrow" aria-label="New release">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+            <circle cx="5" cy="5" r="5" fill="#00d2ef" opacity="0.4"/>
+            <circle cx="5" cy="5" r="3" fill="#00d2ef"/>
+          </svg>
+          Now — Tailwind CSS v4.1
+        </div>
+        <h1>Build fast.<br /><span class="highlight">Ship faster.</span></h1>
+        <p class="hero-sub">
+          A utility-first CSS framework packed with composable classes that let you build any design, directly in your markup — no context switching, no configuration overhead.
+        </p>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-primary btn-lg">
+            Read the docs
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="#" class="btn btn-secondary btn-lg">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M4 4h2.5M4 7h6M4 10h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+            Browse components
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-visual" role="img" aria-label="Code example showing Tailwind CSS class usage">
+        <div class="hero-visual-bar" aria-hidden="true">
+          <div class="dot dot-red"></div>
+          <div class="dot dot-yellow"></div>
+          <div class="dot dot-green"></div>
+        </div>
+        <code>
+          <span class="code-line"><span class="c-comment"><!-- Card component --></span></span>
+          <span class="code-line"><span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-val">"flex items-center</span></span>
+          <span class="code-line"><span class="c-val">      gap-4 rounded-xl p-6</span></span>
+          <span class="code-line"><span class="c-val">      bg-white shadow-md"</span><span class="c-tag">&gt;</span></span>
+          <span class="code-line">  <span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-val">"size-12 rounded-lg</span></span>
+          <span class="code-line"><span class="c-val">        bg-sky-500/10"</span><span class="c-tag">&gt;&lt;/div&gt;</span></span>
+          <span class="code-line">  <span class="c-tag">&lt;div&gt;</span></span>
+          <span class="code-line">    <span class="c-tag">&lt;p</span> <span class="c-attr">class</span>=<span class="c-val">"font-semibold</span></span>
+          <span class="code-line"><span class="c-val">         text-slate-900"</span><span class="c-tag">&gt;</span></span>
+          <span class="code-line">      <span class="c-plain">Fast by default</span></span>
+          <span class="code-line">    <span class="c-tag">&lt;/p&gt;</span></span>
+          <span class="code-line">    <span class="c-tag">&lt;p</span> <span class="c-attr">class</span>=<span class="c-val">"text-sm</span></span>
+          <span class="code-line"><span class="c-val">         text-slate-500"</span><span class="c-tag">&gt;</span></span>
+          <span class="code-line">      <span class="c-plain">Zero runtime overhead.</span></span>
+          <span class="code-line">    <span class="c-tag">&lt;/p&gt;</span></span>
+          <span class="code-line">  <span class="c-tag">&lt;/div&gt;</span></span>
+          <span class="code-line"><span class="c-tag">&lt;/div&gt;</span></span>
+        </code>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       CARDS (LIGHT)
+  ════════════════════════════════════════════════ -->
+  <section class="section" aria-labelledby="cards-heading">
+    <div class="section-inner">
+      <div class="section-label">Core utilities</div>
+      <h2 class="section-title" id="cards-heading">Everything you need to build modern UIs</h2>
+      <p class="section-desc">From layout to color to typography, every CSS property has a corresponding utility class. Compose them freely in your HTML.</p>
+      <div class="cards-grid" role="list">
+
+        <article class="card" role="listitem">
+          <div class="card-icon card-icon-blue" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <rect x="2" y="2" width="7" height="7" rx="1.5" fill="#316ff6"/>
+              <rect x="11" y="2" width="7" height="7" rx="1.5" fill="#316ff6" opacity="0.4"/>
+              <rect x="2" y="11" width="7" height="7" rx="1.5" fill="#316ff6" opacity="0.4"/>
+              <rect x="11" y="11" width="7" height="7" rx="1.5" fill="#316ff6" opacity="

@@ -1,0 +1,827 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arc – Design System Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    --color-primary: #FA4531;
+    --color-primary-dark: #d93520;
+    --color-primary-light: #FFEAE7;
+    --color-indigo: #2702C2;
+    --color-indigo-muted: rgba(23, 3, 148, 0.5);
+    --color-lavender: #c6c8f9;
+    --color-lavender-bg: rgb(224, 224, 247);
+    --color-teal: rgb(0, 234, 231);
+    --color-cream: #FFFCEA;
+    --color-cream-dark: #FFFADD;
+    --color-white: #ffffff;
+    --color-text: rgba(0, 0, 0, 0.85);
+    --color-text-muted: rgba(0, 0, 0, 0.65);
+    --color-text-subtle: #6A6A6A;
+    --color-error: #E84B58;
+    --shadow-subtle: 0 2px 2px rgba(0,0,0,0.1);
+    --shadow-card: 0 2px 5px rgba(0,0,0,0.2);
+    --shadow-medium: 0px 2px 8px 0px rgba(0,0,0,0.25);
+    --shadow-float: 0 7px 15px rgba(0,0,0,0.2);
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+    --radius-pill: 22px;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'Monaco', 'Menlo', monospace;
+  }
+
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    background: var(--color-white);
+    line-height: 1.6;
+  }
+
+  /* ─── NAVIGATION ─── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-subtle);
+  }
+
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .nav-logo-mark {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    background: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-card);
+  }
+
+  .nav-logo-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: var(--radius-md);
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .nav-links a:hover {
+    color: var(--color-text);
+    background: var(--color-lavender-bg);
+  }
+
+  .nav-links a.active {
+    color: var(--color-indigo);
+    background: var(--color-lavender-bg);
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .btn {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s, transform 0.1s, box-shadow 0.15s;
+    outline: none;
+  }
+
+  .btn:focus-visible {
+    outline: 2px solid rgba(0, 0, 0, 0.4);
+    outline-offset: 2px;
+  }
+
+  .btn-sm {
+    padding: 7px 16px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+  }
+
+  .btn-md {
+    padding: 11px 24px;
+    border-radius: var(--radius-pill);
+    font-size: 15px;
+  }
+
+  .btn-lg {
+    padding: 14px 32px;
+    border-radius: var(--radius-pill);
+    font-size: 16px;
+  }
+
+  .btn-primary {
+    background: var(--color-primary);
+    color: #fff;
+    box-shadow: var(--shadow-card);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-primary-dark);
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-subtle);
+  }
+
+  .btn-secondary {
+    background: var(--color-lavender-bg);
+    color: var(--color-indigo);
+    box-shadow: var(--shadow-subtle);
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-lavender);
+    box-shadow: var(--shadow-card);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary:active {
+    transform: translateY(0);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-text-muted);
+    border: 1px solid rgba(0,0,0,0.12);
+  }
+
+  .btn-ghost:hover {
+    background: rgba(0,0,0,0.04);
+    color: var(--color-text);
+  }
+
+  .nav-hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: var(--color-text);
+    border-radius: var(--radius-md);
+  }
+
+  .nav-hamburger:focus-visible {
+    outline: 2px solid rgba(0,0,0,0.4);
+    outline-offset: 2px;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: var(--color-white);
+    padding: 100px 32px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 500px;
+    background: radial-gradient(ellipse at center, rgba(198,200,249,0.35) 0%, rgba(255,255,255,0) 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-indigo);
+    background: var(--color-lavender-bg);
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    margin-bottom: 24px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .hero-eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  .hero-title {
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+    color: var(--color-text);
+    max-width: 780px;
+    margin: 0 auto 24px;
+  }
+
+  .hero-title-accent {
+    color: var(--color-primary);
+  }
+
+  .hero-subtitle {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    max-width: 520px;
+    margin: 0 auto 40px;
+    line-height: 1.65;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .hero-meta {
+    margin-top: 24px;
+    font-size: 13px;
+    color: var(--color-text-subtle);
+  }
+
+  /* ─── CARDS SECTION ─── */
+  .section {
+    padding: 80px 32px;
+  }
+
+  .section-cream {
+    background: var(--color-cream);
+  }
+
+  .section-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 56px;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .section-desc {
+    font-size: 16px;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+  }
+
+  .cards-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .card {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+    box-shadow: var(--shadow-medium);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: transform 0.18s, box-shadow 0.18s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-float);
+  }
+
+  .card-tinted-lavender {
+    background: var(--color-lavender-bg);
+  }
+
+  .card-tinted-cream {
+    background: var(--color-cream);
+  }
+
+  .card-icon-wrap {
+    width: 53px;
+    height: 53px;
+    border-radius: var(--radius-md);
+    border: 4px solid #fff;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .card-icon-lavender { background: var(--color-lavender); }
+  .card-icon-coral { background: var(--color-primary); }
+  .card-icon-indigo { background: var(--color-indigo); }
+
+  .card-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .card-desc {
+    font-size: 15px;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+    flex: 1;
+  }
+
+  .card-link {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-indigo);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+  }
+
+  .card-link:hover {
+    color: var(--color-primary);
+  }
+
+  .card-link:focus-visible {
+    outline: 2px solid rgba(0,0,0,0.4);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  .card-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-indigo);
+    background: rgba(39, 2, 194, 0.1);
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    width: fit-content;
+  }
+
+  .card-tag-coral {
+    color: var(--color-primary);
+    background: var(--color-primary-light);
+  }
+
+  /* ─── FORM SECTION ─── */
+  .section-form {
+    background: var(--color-white);
+    padding: 80px 32px;
+  }
+
+  .form-container {
+    max-width: 520px;
+    margin: 0 auto;
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: 48px;
+    box-shadow: var(--shadow-float);
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .form-heading {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    margin-bottom: 6px;
+  }
+
+  .form-subheading {
+    font-size: 14px;
+    color: var(--color-text-muted);
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 24px;
+  }
+
+  .form-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    letter-spacing: 0.01em;
+  }
+
+  .form-input {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--color-text);
+    background: var(--color-white);
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: var(--radius-md);
+    padding: 11px 14px;
+    width: 100%;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+    box-shadow: var(--shadow-subtle);
+  }
+
+  .form-input::placeholder {
+    color: rgba(0,0,0,0.3);
+  }
+
+  .form-input:hover {
+    border-color: rgba(0,0,0,0.25);
+  }
+
+  .form-input:focus {
+    border-color: var(--color-indigo);
+    box-shadow: 0 0 0 3px rgba(39, 2, 194, 0.1);
+  }
+
+  .form-hint {
+    font-size: 12px;
+    color: var(--color-text-subtle);
+    margin-top: 2px;
+  }
+
+  .form-submit-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  .form-privacy {
+    font-size: 12px;
+    color: var(--color-text-subtle);
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .form-privacy a {
+    color: var(--color-indigo);
+    text-decoration: none;
+  }
+
+  .form-privacy a:hover {
+    text-decoration: underline;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--color-text);
+    padding: 48px 32px;
+    text-align: center;
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .footer-logo-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-md);
+    background: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer-logo-text {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+
+  .footer-copy {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .footer-links a:hover {
+    color: #fff;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+
+    .nav-actions .btn-ghost {
+      display: none;
+    }
+
+    .nav-hamburger {
+      display: flex;
+    }
+
+    .hero {
+      padding: 72px 24px 64px;
+    }
+
+    .section {
+      padding: 64px 24px;
+    }
+
+    .section-form {
+      padding: 64px 24px;
+    }
+
+    .cards-grid {
+      grid-template-columns: 1fr;
+      max-width: 480px;
+    }
+
+    .form-container {
+      padding: 32px 24px;
+    }
+
+    .form-submit-row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .footer-links {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .cards-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cards-grid .card:last-child {
+      grid-column: span 2;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAVIGATION ─── -->
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo" aria-label="Arc home">
+      <div class="nav-logo-mark" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M10 3 C5.5 3 2 6.5 2 11 C2 14.5 4.5 17 8 17 L12 17 C15.5 17 18 14.5 18 11 C18 6.5 14.5 3 10 3Z" fill="white" opacity="0.9"/>
+          <circle cx="10" cy="10" r="2.5" fill="white"/>
+        </svg>
+      </div>
+      <span class="nav-logo-text">Arc</span>
+    </a>
+
+    <ul class="nav-links" role="list">
+      <li><a href="#" class="active">Product</a></li>
+      <li><a href="#">Features</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">Developers</a></li>
+      <li><a href="#">Company</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <a href="#" class="btn btn-sm btn-ghost" aria-label="Sign in">Sign in</a>
+      <a href="#" class="btn btn-sm btn-primary">Download</a>
+      <button class="nav-hamburger" aria-label="Open navigation menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <line x1="4" y1="7" x2="20" y2="7"/>
+          <line x1="4" y1="12" x2="20" y2="12"/>
+          <line x1="4" y1="17" x2="20" y2="17"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero-eyebrow" aria-label="Now available">
+    <span class="hero-eyebrow-dot" aria-hidden="true"></span>
+    Now available on macOS &amp; iOS
+  </div>
+
+  <h1 class="hero-title" id="hero-heading">
+    The browser that
+    <span class="hero-title-accent">puts you</span>
+    in control
+  </h1>
+
+  <p class="hero-subtitle">
+    Arc is the browser that works the way your mind does — beautifully organized, quietly powerful, and entirely yours.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#" class="btn btn-lg btn-primary">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+        <path d="M8 2v9M4 7l4 4 4-4"/>
+        <path d="M2 13h12"/>
+      </svg>
+      Download Arc
+    </a>
+    <a href="#" class="btn btn-lg btn-secondary">
+      See what's new
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M3 7h8M7 3l4 4-4 4"/>
+      </svg>
+    </a>
+  </div>
+
+  <p class="hero-meta">Free forever. macOS 13+ required.</p>
+</section>
+
+<!-- ─── CARDS ─── -->
+<section class="section section-cream" aria-labelledby="features-heading">
+  <div class="section-header">
+    <p class="section-label" aria-hidden="true">What makes Arc different</p>
+    <h2 class="section-title" id="features-heading">Built for how you actually browse</h2>
+    <p class="section-desc">Three ideas, radically rethought. Your tabs, your spaces, your browser — working together for the first time.</p>
+  </div>
+
+  <div class="cards-grid">
+
+    <!-- Card 1: Tinted Lavender -->
+    <article class="card card-tinted-lavender" aria-label="Spaces feature">
+      <div style="display:flex; align-items:center; justify-content:space-between;">
+        <div class="card-icon-wrap card-icon-lavender" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#2702C2" stroke-width="2" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+            <rect x="12" y="3" width="7" height="7" rx="1.5"/>
+            <rect x="3" y="12" width="7" height="7" rx="1.5"/>
+            <rect x="12" y="12" width="7" height="7" rx="1.5"/>
+          </svg>
+        </div>
+        <span class="card-tag">New</span>
+      </div>
+      <h3 class="card-title">Spaces</h3>
+      <p class="card-desc">Separate work, personal, and side projects into distinct Spaces. Switch contexts in a keystroke — no tab soup required.</p>
+      <a href="#" class="card-link" aria-label="Learn more about Spaces">
+        Learn more
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M2 6.5h9M7 2.5l4 4-4 4"/>
+        </svg>
+      </a>
+    </article>
+
+    <!-- Card 2: White / Elevated -->
+    <article class="card" aria-label="Command Bar feature">
+      <div style="display:flex; align-items:center; justify-content:space-between;">
+        <div class="card-icon-wrap card-icon-coral" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="10" cy="10" r="6"/>
+            <path d="M14.5 14.5L19 19"/>
+          </svg>
+        </div>
+        <span class="card-tag card-tag-coral">Popular</span>
+      </div>
+      <h3 class="card-title">Command Bar</h3>
+      <p class="card-desc">One shortcut to go anywhere. Search your tabs, history, boosts, and the entire web — all from the same blazing-fast bar.</p>
+      <div style="display:flex; align-items:center; gap:6px; margin-top:auto;">
+        <kbd style="font-family: var(--font-mono); font-size:12px; background:var(--color-cream); border:1px solid rgba(0,0,0,0.12); border-radius:4px; padding:2px 7px; color:var(--color-text-muted); box-shadow: 0 1px 1px rgba(0,0,0,0.12);">⌘</kbd>
+        <kbd style="font-family: var(--font-mono); font-size:12px; background:var(--color-cream); border:1px solid rgba(0,0,0,0.12); border-radius:4px; padding:2px 7px; color:var(--color-text-muted); box-shadow: 0 1px 1px rgba(0,0,0,0.12);">T</kbd>
+        <span style="font-size:13px; color:var(--color-text-subtle); margin-left:4px;">Open Command Bar</span>
+      </div>
+      <a href="#" class="card-link" aria-label="Learn more about Command Bar">
+        Learn more
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M2 6.5h9M7 2.5l4 4-4 4"/>
+        </svg>
+      </a>
+    </article>
+
+    <!-- Card 3: Cream Tinted -->
+    <article class="card card-tinted-cream" aria-label="Boosts feature">
+      <div style="display:flex; align-items:center; justify-content:space-between;">
+        <div class="card-icon-wrap card-icon-indigo" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M11 3 L13.5 8.5 L19.5 9.3 L15 13.5 L16.3 19.5 L11 16.5 L5.7 19.5 L7 13.5 L2.5 9.3 L8.5 8.5 Z"/>
+          </svg>
+        </div>
+        <span class="card-tag">Beta</span>
+      </div>
+      <h3 class="card-title">Boosts</h3>
+      <p class="card-desc">Restyle any website to look and behave the way you want. Change fonts, colors, or inject custom code — no extensions needed.</p>
+      <a href="#" class="card-link" aria-label="Learn more about Boosts">
+        Learn more

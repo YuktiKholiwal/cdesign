@@ -1,0 +1,14 @@
+{
+  "slug": "tailwind",
+  "title": "Tailwind CSS",
+  "author": "cdesign",
+  "description": "Clean, technical, and developer-focused with a minimal aesthetic. The UI is confident and precise, using tight typographic control, subtle transparency effects, and careful dark-mode support throughou",
+  "topics": [
+    "developer-tools",
+    "marketing",
+    "colorful"
+  ],
+  "source": "https://tailwindcss.com",
+  "version": "1.0.0",
+  "createdAt": "2026-06-28T23:47:21.417Z"
+}

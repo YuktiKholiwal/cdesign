@@ -48,6 +48,96 @@ const TARGETS: Target[] = [
     url: "https://github.com",
     topics: ["developer-tools", "dark", "product"],
   },
+  {
+    slug: "apple",
+    title: "Apple",
+    url: "https://www.apple.com",
+    topics: ["consumer", "premium", "minimal"],
+  },
+  {
+    slug: "figma",
+    title: "Figma",
+    url: "https://www.figma.com",
+    topics: ["design-tools", "colorful", "playful"],
+  },
+  {
+    slug: "airbnb",
+    title: "Airbnb",
+    url: "https://www.airbnb.com",
+    topics: ["consumer", "travel", "friendly"],
+  },
+  {
+    slug: "anthropic",
+    title: "Anthropic",
+    url: "https://www.anthropic.com",
+    topics: ["ai", "editorial", "warm"],
+  },
+  {
+    slug: "openai",
+    title: "OpenAI",
+    url: "https://openai.com",
+    topics: ["ai", "minimal", "product"],
+  },
+  {
+    slug: "framer",
+    title: "Framer",
+    url: "https://www.framer.com",
+    topics: ["design-tools", "dark", "bold"],
+  },
+  {
+    slug: "raycast",
+    title: "Raycast",
+    url: "https://www.raycast.com",
+    topics: ["developer-tools", "dark", "refined"],
+  },
+  {
+    slug: "supabase",
+    title: "Supabase",
+    url: "https://supabase.com",
+    topics: ["developer-tools", "dark", "database"],
+  },
+  {
+    slug: "resend",
+    title: "Resend",
+    url: "https://resend.com",
+    topics: ["developer-tools", "minimal", "email"],
+  },
+  {
+    slug: "mercury",
+    title: "Mercury",
+    url: "https://mercury.com",
+    topics: ["fintech", "refined", "saas"],
+  },
+  {
+    slug: "clerk",
+    title: "Clerk",
+    url: "https://clerk.com",
+    topics: ["developer-tools", "auth", "purple"],
+  },
+  {
+    slug: "arc",
+    title: "Arc",
+    url: "https://arc.net",
+    topics: ["consumer", "browser", "gradient"],
+  },
+  {
+    slug: "loom",
+    title: "Loom",
+    url: "https://www.loom.com",
+    topics: ["saas", "video", "friendly"],
+  },
+  {
+    slug: "pitch",
+    title: "Pitch",
+    url: "https://pitch.com",
+    topics: ["saas", "presentations", "bold"],
+  },
+  {
+    slug: "stripe-press",
+    title: "Stripe Press",
+    url: "https://press.stripe.com",
+    topics: ["editorial", "books", "premium"],
+  },
 ];
 
 const DESIGNS_DIR = path.join(process.cwd(), "content", "designs");

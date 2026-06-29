@@ -1,0 +1,14 @@
+{
+  "slug": "clerk",
+  "title": "Clerk",
+  "author": "cdesign",
+  "description": "Clerk presents a clean, modern developer-focused aesthetic — dark-leaning surfaces with sharp typographic hierarchy, minimal ornamentation, and a sense of technical precision balanced with approachabi",
+  "topics": [
+    "developer-tools",
+    "auth",
+    "purple"
+  ],
+  "source": "https://clerk.com",
+  "version": "1.0.0",
+  "createdAt": "2026-06-29T00:20:28.225Z"
+}
