@@ -82,7 +82,6 @@ export default async function DesignPage({
           manifest={manifest}
           designMd={pkg.designMd}
           tokens={pkg.tokens}
-          initialPreviewHtml={pkg.previewHtml}
         />
       </div>
     </main>

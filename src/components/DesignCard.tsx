@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { DesignCardData } from "@/lib/registry";
+import { screenshotUrl } from "@/lib/screenshot";
 
 /** Format an install count compactly, e.g. 1284 → "1.3k". */
 function formatInstalls(n: number): string {
@@ -9,8 +10,12 @@ function formatInstalls(n: number): string {
 
 /**
  * A marketplace listing card, Geist-styled: hairline border, subtle tonal
- * elevation that lifts on hover, and a live thumbnail that is the design's own
- * preview.html rendered in a sandboxed, non-interactive iframe.
+ * elevation that lifts on hover, and a thumbnail that is a server-rendered
+ * screenshot of the design's own source site. We use a screenshot rather than
+ * a live iframe because roughly half of real sites forbid framing
+ * (X-Frame-Options / CSP `frame-ancestors`) and would render blank; a
+ * screenshot is captured server-side and returned as an image, so those
+ * headers don't apply. See `@/lib/screenshot`.
  */
 export function DesignCard({ design }: { design: DesignCardData }) {
   return (
@@ -19,15 +24,14 @@ export function DesignCard({ design }: { design: DesignCardData }) {
       className="group flex flex-col overflow-hidden rounded-xl border border-line bg-white shadow-[0_2px_2px_rgba(0,0,0,0.04)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_1px_1px_rgba(0,0,0,0.02),0_8px_16px_-4px_rgba(0,0,0,0.04),0_24px_32px_-8px_rgba(0,0,0,0.06)]"
     >
       <div className="relative h-44 overflow-hidden bg-neutral-50">
-        {design.previewHtml ? (
-          <iframe
-            title={`${design.title} preview`}
-            sandbox=""
-            srcDoc={design.previewHtml}
+        {design.source ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            alt={`${design.title} preview`}
+            src={screenshotUrl(design.source)}
+            loading="lazy"
             aria-hidden
-            tabIndex={-1}
-            scrolling="no"
-            className="pointer-events-none h-[700px] w-[1400px] origin-top-left scale-[0.357] border-0"
+            className="pointer-events-none h-full w-full border-0 object-cover object-top"
           />
         ) : (
           <div className="grid h-full place-items-center font-mono text-xs text-neutral-400">

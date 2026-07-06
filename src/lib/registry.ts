@@ -166,23 +166,18 @@ export async function getDesign(slug: string): Promise<DesignPackage | null> {
   };
 }
 
-/** A grid card: listing metadata plus the preview HTML used as a thumbnail. */
-export type DesignCardData = DesignListing & { previewHtml: string };
+/**
+ * A grid card. Thumbnails are live iframes of the design's real `source`
+ * site, so the card only needs the listing metadata (which carries `source`).
+ */
+export type DesignCardData = DesignListing;
 
 /**
- * Load listings together with their preview HTML, for the marketplace grid.
- * Serializable, so it can be handed straight to a client component.
+ * Load listings for the marketplace grid. Serializable, so it can be handed
+ * straight to a client component.
  */
 export async function getCards(): Promise<DesignCardData[]> {
-  const listings = await getListings();
-  return Promise.all(
-    listings.map(async (listing) => {
-      const previewHtml = await fs
-        .readFile(path.join(DESIGNS_DIR, listing.slug, "preview.html"), "utf8")
-        .catch(() => "");
-      return { ...listing, previewHtml };
-    }),
-  );
+  return getListings();
 }
 
 /** The set of distinct topics across all designs, sorted by frequency. */

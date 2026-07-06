@@ -8,11 +8,7 @@ import { InstallCommand } from "./InstallCommand";
 import { Button } from "./ui/Button";
 import { FOLLOWUP_PROMPT } from "@/lib/followupPrompt";
 import { downloadTextFile } from "@/lib/download";
-import type {
-  DesignManifest,
-  ExtractedDesign,
-  PreviewResponse,
-} from "@/lib/types";
+import type { DesignManifest, ExtractedDesign } from "@/lib/types";
 
 type Tab = "spec" | "preview";
 
@@ -25,12 +21,10 @@ export function DesignDetail({
   manifest,
   designMd,
   tokens,
-  initialPreviewHtml,
 }: {
   manifest: DesignManifest;
   designMd: string;
   tokens: ExtractedDesign;
-  initialPreviewHtml: string;
 }) {
   const [tab, setTab] = useState<Tab>("preview");
 
@@ -96,11 +90,7 @@ export function DesignDetail({
           {tab === "spec" ? (
             <SpecView designMd={designMd} />
           ) : (
-            <PreviewView
-              designMd={designMd}
-              initialHtml={initialPreviewHtml}
-              slug={manifest.slug}
-            />
+            <PreviewView source={manifest.source} title={manifest.title} />
           )}
         </div>
       </div>
@@ -171,97 +161,44 @@ function SpecView({ designMd }: { designMd: string }) {
   );
 }
 
-function PreviewView({
-  designMd,
-  initialHtml,
-  slug,
-}: {
-  designMd: string;
-  initialHtml: string;
-  slug: string;
-}) {
-  const [html, setHtml] = useState<string>(initialHtml);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  async function regenerate() {
-    if (loading) return;
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch("/api/preview", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ designMd }),
-      });
-      const data = (await res.json()) as PreviewResponse | { error: string };
-      if (!res.ok || "error" in data) {
-        setError("error" in data ? data.error : "Failed to generate preview.");
-        return;
-      }
-      setHtml(data.html);
-    } catch {
-      setError("Network error while generating the preview.");
-    } finally {
-      setLoading(false);
-    }
-  }
+function PreviewView({ source, title }: { source: string; title: string }) {
+  const host = source.replace(/^https?:\/\//, "").replace(/\/$/, "");
 
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
-        <Button
-          type="button"
-          variant="primary"
-          size="md"
-          onClick={regenerate}
-          disabled={loading}
-        >
-          {loading
-            ? "Rebuilding…"
-            : html
-              ? "Regenerate Preview"
-              : "Generate Live Preview"}
-        </Button>
-        {html && (
-          <Button
-            type="button"
-            variant="secondary"
-            size="md"
-            onClick={() =>
-              downloadTextFile(`${slug}.preview.html`, html, "text/html")
-            }
-          >
-            ↓ preview.html
-          </Button>
-        )}
         <span className="text-sm text-neutral-500">
-          A sample UI built purely from this spec, rendered in a sandbox.
+          The live{" "}
+          <span className="font-mono text-neutral-700">{host}</span> site,
+          embedded below. Some sites block framing and may appear blank.
         </span>
+        <a
+          href={source}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="ml-auto"
+        >
+          <Button type="button" variant="secondary" size="sm">
+            Open site ↗
+          </Button>
+        </a>
       </div>
 
-      {error && (
-        <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
-          {error}
-        </p>
-      )}
-
-      {html ? (
+      {source ? (
         <iframe
-          title={`${slug} design preview`}
-          sandbox="allow-scripts"
-          srcDoc={html}
+          title={`${title} live site`}
+          src={source}
+          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+          loading="lazy"
+          referrerPolicy="no-referrer"
           className="h-[40rem] w-full rounded-xl border border-line bg-white shadow-[0_2px_2px_rgba(0,0,0,0.04)]"
         />
       ) : (
-        !loading && (
-          <div className="flex h-[20rem] items-center justify-center rounded-xl border border-dashed border-line bg-neutral-50 text-center text-sm text-neutral-500">
-            <p className="max-w-sm px-6">
-              No preview shipped with this design yet. Generate one to see the
-              spec rendered as a live component.
-            </p>
-          </div>
-        )
+        <div className="flex h-[20rem] items-center justify-center rounded-xl border border-dashed border-line bg-neutral-50 text-center text-sm text-neutral-500">
+          <p className="max-w-sm px-6">
+            No source site is recorded for this design.
+          </p>
+        </div>
       )}
     </div>
   );
