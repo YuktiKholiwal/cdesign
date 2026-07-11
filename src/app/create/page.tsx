@@ -176,20 +176,18 @@ export default function CreatePage() {
       {showResult && (
         <section className="mx-auto mt-10 max-w-2xl rounded-xl border border-line bg-neutral-50 p-5 text-sm text-neutral-600">
           <h2 className="font-semibold tracking-tight text-neutral-900">
-            Publish to the marketplace
+            Add it to the marketplace grid
           </h2>
           <p className="mt-2">
-            Download the <span className="font-mono">design.md</span> and{" "}
-            <span className="font-mono">tokens.json</span> above, then drop them
-            into a folder under{" "}
+            Use <span className="font-mono">Publish &amp; get install command</span>{" "}
+            above for a shareable{" "}
+            <span className="font-mono">npx cdesign-cli add</span> link right now.
+            To feature it in the public grid instead, download the{" "}
+            <span className="font-mono">design.md</span> and{" "}
+            <span className="font-mono">tokens.json</span>, drop them into{" "}
             <span className="font-mono">content/designs/&lt;slug&gt;/</span>{" "}
-            alongside a <span className="font-mono">design.json</span> manifest
-            and an optional <span className="font-mono">preview.html</span>. It
-            then appears in the grid and is installable via{" "}
-            <span className="font-mono">npx cdesign-cli add &lt;slug&gt;</span>.
-          </p>
-          <p className="mt-2 text-neutral-500">
-            (Hosted publishing — auth + one-click submit — is on the roadmap.)
+            alongside a <span className="font-mono">design.json</span> manifest,
+            and commit.
           </p>
         </section>
       )}

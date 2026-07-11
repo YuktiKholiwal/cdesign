@@ -33,3 +33,6 @@ next-env.d.ts
 
 # npm pack output
 cli/*.tgz
+
+# local dev store for user-published designs (KV in prod)
+/content/published/

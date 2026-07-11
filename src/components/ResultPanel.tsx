@@ -4,6 +4,7 @@ import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { CopyButton } from "./CopyButton";
+import { InstallCommand } from "./InstallCommand";
 import { FOLLOWUP_PROMPT } from "@/lib/followupPrompt";
 import { downloadTextFile } from "@/lib/download";
 import type { ExtractedDesign, PreviewResponse } from "@/lib/types";
@@ -97,7 +98,101 @@ export function ResultPanel({
       ) : (
         <PreviewView designMd={designMd} />
       )}
+
+      <PublishBar
+        designMd={designMd}
+        host={host}
+        rawTokens={rawTokens}
+        streaming={streaming}
+      />
     </section>
+  );
+}
+
+/**
+ * Publish the generated spec as a shareable, id-addressed package so it can be
+ * installed with `npx cdesign-cli add <slug>`. Anonymous — not added to the
+ * marketplace grid. Disabled until the spec finishes streaming.
+ */
+function PublishBar({
+  designMd,
+  host,
+  rawTokens,
+  streaming,
+}: ResultPanelProps) {
+  const [slug, setSlug] = useState<string | null>(null);
+  const [publishing, setPublishing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function publish() {
+    if (publishing) return;
+    setPublishing(true);
+    setError(null);
+    try {
+      // A host like "stripe.com" becomes a real source URL; a remix label
+      // like "Stripe × Linear" has no single origin, so leave it blank.
+      const isHostname = /^[a-z0-9.-]+\.[a-z]{2,}$/i.test(host);
+      const res = await fetch("/api/publish", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          designMd,
+          tokens: rawTokens,
+          title: host,
+          source: isHostname ? `https://${host}` : "",
+        }),
+      });
+      const data = (await res.json()) as { slug?: string; error?: string };
+      if (!res.ok || !data.slug) {
+        setError(data.error ?? "Could not publish. Please try again.");
+        return;
+      }
+      setSlug(data.slug);
+    } catch {
+      setError("Network error while publishing.");
+    } finally {
+      setPublishing(false);
+    }
+  }
+
+  return (
+    <div className="rounded-xl border border-line bg-neutral-50 p-5">
+      <h3 className="text-sm font-semibold tracking-tight text-neutral-900">
+        Install this design
+      </h3>
+      {slug ? (
+        <div className="mt-3 space-y-2">
+          <p className="text-sm text-neutral-600">
+            Published. Anyone can add it to their project:
+          </p>
+          <InstallCommand slug={slug} size="sm" />
+          <p className="text-xs text-neutral-400">
+            Shareable link — not listed in the marketplace grid.
+          </p>
+        </div>
+      ) : (
+        <div className="mt-3 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={publish}
+            disabled={streaming || publishing}
+            className="inline-flex items-center justify-center rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {publishing ? "Publishing…" : "Publish & get install command"}
+          </button>
+          <span className="text-sm text-neutral-500">
+            {streaming
+              ? "Available once the spec finishes."
+              : "Get an npx command to install this exact spec."}
+          </span>
+        </div>
+      )}
+      {error && (
+        <p className="mt-3 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+          {error}
+        </p>
+      )}
+    </div>
   );
 }
 
