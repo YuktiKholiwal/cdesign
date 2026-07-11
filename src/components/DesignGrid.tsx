@@ -56,7 +56,7 @@ export function DesignGrid({
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative w-full sm:max-w-xs">
           <svg
-            className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400"
+            className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400 dark:text-neutral-500"
             viewBox="0 0 16 16"
             fill="none"
             aria-hidden
@@ -74,11 +74,11 @@ export function DesignGrid({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search designs…"
-            className="h-10 w-full rounded-md border border-line bg-white pl-9 pr-3 text-sm text-neutral-900 placeholder:text-neutral-400 transition-colors focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+            className="h-10 w-full rounded-md border border-line bg-white dark:bg-neutral-900 pl-9 pr-3 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 dark:placeholder:text-neutral-500 transition-colors focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
           />
         </div>
 
-        <div className="flex h-10 items-center gap-0.5 rounded-md border border-line bg-neutral-50 p-1">
+        <div className="flex h-10 items-center gap-0.5 rounded-md border border-line bg-neutral-50 dark:bg-neutral-900 p-1">
           {SORTS.map((s) => (
             <button
               key={s.key}
@@ -86,8 +86,8 @@ export function DesignGrid({
               onClick={() => setSort(s.key)}
               className={`h-full rounded px-3 text-[13px] font-medium transition-colors ${
                 sort === s.key
-                  ? "bg-white text-neutral-900 shadow-sm"
-                  : "text-neutral-500 hover:text-neutral-900"
+                  ? "bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 shadow-sm"
+                  : "text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
               }`}
             >
               {s.label}
@@ -110,7 +110,7 @@ export function DesignGrid({
       )}
 
       {filtered.length === 0 ? (
-        <p className="mt-16 text-center text-sm text-neutral-500">
+        <p className="mt-16 text-center text-sm text-neutral-500 dark:text-neutral-400">
           No designs match your search.
         </p>
       ) : (
@@ -139,8 +139,8 @@ function Chip({
       onClick={onClick}
       className={`rounded-full border px-3 py-1 font-mono text-xs transition-colors ${
         active
-          ? "border-neutral-900 bg-neutral-900 text-white"
-          : "border-line text-neutral-600 hover:border-black/20 hover:text-neutral-900"
+          ? "border-neutral-900 dark:border-neutral-100 bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900"
+          : "border-line text-neutral-600 dark:text-neutral-300 hover:border-black/20 dark:hover:border-white/25 hover:text-neutral-900 dark:hover:text-neutral-100"
       }`}
     >
       {children}

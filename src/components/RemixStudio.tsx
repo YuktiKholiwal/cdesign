@@ -178,8 +178,8 @@ export function RemixStudio({ designs }: { designs: DesignOption[] }) {
         />
       </div>
 
-      <div className="mt-6 overflow-hidden rounded-xl border border-line bg-white">
-        <div className="grid grid-cols-[1fr_auto] items-center gap-2 border-b border-line bg-neutral-50 px-4 py-2.5 text-xs font-medium text-neutral-500">
+      <div className="mt-6 overflow-hidden rounded-xl border border-line bg-white dark:bg-neutral-900">
+        <div className="grid grid-cols-[1fr_auto] items-center gap-2 border-b border-line bg-neutral-50 dark:bg-neutral-900 px-4 py-2.5 text-xs font-medium text-neutral-500 dark:text-neutral-400">
           <span>Take each part from…</span>
           <SegmentHeader labelA={labelA} labelB={labelB} />
         </div>
@@ -196,8 +196,8 @@ export function RemixStudio({ designs }: { designs: DesignOption[] }) {
       </div>
 
       <div className="mt-6 flex items-center justify-between gap-3">
-        <p className="text-sm text-neutral-500">
-          {labelA} <span className="text-neutral-300">×</span> {labelB}
+        <p className="text-sm text-neutral-500 dark:text-neutral-400">
+          {labelA} <span className="text-neutral-300 dark:text-neutral-600">×</span> {labelB}
         </p>
         <Button
           type="button"
@@ -211,12 +211,12 @@ export function RemixStudio({ designs }: { designs: DesignOption[] }) {
       </div>
 
       {error && (
-        <p className="mt-4 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+        <p className="mt-4 rounded-md border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-950/40 px-3 py-2 text-sm text-red-700 dark:text-red-300">
           {error}
         </p>
       )}
       {loading && !streaming && (
-        <p className="mt-4 text-sm text-neutral-500">
+        <p className="mt-4 text-sm text-neutral-500 dark:text-neutral-400">
           Resolving sources and merging tokens…
         </p>
       )}
@@ -250,9 +250,9 @@ function SourceCard({
   designs: DesignOption[];
 }) {
   return (
-    <div className="rounded-xl border border-line bg-white p-4">
+    <div className="rounded-xl border border-line bg-white dark:bg-neutral-900 p-4">
       <div className="flex items-center justify-between">
-        <span className="text-sm font-semibold text-neutral-900">{heading}</span>
+        <span className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">{heading}</span>
         <div className="flex rounded-md border border-line p-0.5 text-xs">
           <ModeTab
             active={state.mode === "design"}
@@ -274,7 +274,7 @@ function SourceCard({
           <select
             value={state.slug}
             onChange={(e) => onChange({ ...state, slug: e.target.value })}
-            className="h-10 w-full rounded-md border border-line bg-white px-3 text-sm text-neutral-900 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+            className="h-10 w-full rounded-md border border-line bg-white dark:bg-neutral-900 px-3 text-sm text-neutral-900 dark:text-neutral-100 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
           >
             {designs.map((d) => (
               <option key={d.slug} value={d.slug}>
@@ -289,7 +289,7 @@ function SourceCard({
             placeholder="https://example.com"
             value={state.url}
             onChange={(e) => onChange({ ...state, url: e.target.value })}
-            className="h-10 w-full rounded-md border border-line bg-white px-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+            className="h-10 w-full rounded-md border border-line bg-white dark:bg-neutral-900 px-3 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
           />
         )}
       </div>
@@ -312,8 +312,8 @@ function ModeTab({
       onClick={onClick}
       className={`rounded px-2 py-0.5 font-medium transition-colors ${
         active
-          ? "bg-neutral-900 text-white"
-          : "text-neutral-500 hover:text-neutral-900"
+          ? "bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900"
+          : "text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
       }`}
     >
       {children}
@@ -345,7 +345,7 @@ function DimensionRow({
 }) {
   return (
     <div className="grid grid-cols-[1fr_auto] items-center gap-2 border-b border-line px-4 py-3 last:border-b-0">
-      <span className="text-sm text-neutral-800">
+      <span className="text-sm text-neutral-800 dark:text-neutral-200">
         {DIMENSION_LABELS[dimension]}
       </span>
       <div className="grid w-40 grid-cols-2 gap-1 sm:w-56">
@@ -376,8 +376,8 @@ function PickButton({
       aria-pressed={active}
       className={`rounded-md border py-1.5 text-sm font-medium transition-colors ${
         active
-          ? "border-brand bg-brand/10 text-brand-hover"
-          : "border-line text-neutral-500 hover:border-neutral-300 hover:text-neutral-900"
+          ? "border-brand bg-brand/10 dark:bg-brand/20 text-brand-hover"
+          : "border-line text-neutral-500 dark:text-neutral-400 hover:border-neutral-300 dark:hover:border-neutral-700 hover:text-neutral-900 dark:hover:text-neutral-100"
       }`}
     >
       {children}

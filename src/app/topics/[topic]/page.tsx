@@ -32,15 +32,15 @@ export default async function TopicPage({
     <main className="mx-auto max-w-6xl px-5 py-12">
       <Link
         href="/topics"
-        className="font-mono text-[13px] text-neutral-500 transition-colors hover:text-neutral-900"
+        className="font-mono text-[13px] text-neutral-500 dark:text-neutral-400 transition-colors hover:text-neutral-900 dark:hover:text-neutral-100"
       >
         ← All topics
       </Link>
-      <h1 className="mt-5 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-        <span className="text-neutral-300">#</span>
+      <h1 className="mt-5 text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-4xl">
+        <span className="text-neutral-300 dark:text-neutral-600">#</span>
         {decoded}
       </h1>
-      <p className="mt-2 text-lg text-neutral-500">
+      <p className="mt-2 text-lg text-neutral-500 dark:text-neutral-400">
         {inTopic.length} design{inTopic.length === 1 ? "" : "s"} in this topic.
       </p>
 

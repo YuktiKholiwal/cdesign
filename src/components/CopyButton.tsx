@@ -36,7 +36,7 @@ export function CopyButton({
       onClick={handleCopy}
       className={
         className ??
-        "inline-flex h-9 items-center gap-1.5 rounded-md border border-line bg-white px-3 text-[13px] font-medium text-neutral-700 transition-colors hover:border-black/20 hover:bg-neutral-50"
+        "inline-flex h-9 items-center gap-1.5 rounded-md border border-line bg-white dark:bg-neutral-900 px-3 text-[13px] font-medium text-neutral-700 dark:text-neutral-200 transition-colors hover:border-black/20 dark:hover:border-white/25 hover:bg-neutral-50 dark:hover:bg-neutral-800"
       }
     >
       {copied ? copiedLabel : label}

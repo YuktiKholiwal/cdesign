@@ -9,9 +9,21 @@
   --line-strong: rgba(0, 0, 0, 0.12);
 }
 
+/*
+ * Geist Dark theme. Same token names, inverted values: the hairline becomes a
+ * translucent white so every `border-line` / `.card` / divider adapts without
+ * per-element changes. Surfaces and text are handled by `dark:` variants in the
+ * components; this block covers the shared, variable-driven pieces.
+ */
+.dark {
+  color-scheme: dark;
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.16);
+}
+
 @layer base {
   body {
-    @apply bg-white font-sans text-neutral-900 antialiased;
+    @apply bg-white font-sans text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-200;
     font-feature-settings: "cv01", "ss01";
   }
 
@@ -19,7 +31,7 @@
   h1,
   h2,
   h3 {
-    @apply font-semibold text-neutral-900;
+    @apply font-semibold text-neutral-900 dark:text-neutral-100;
     letter-spacing: -0.02em;
   }
   .display {
@@ -29,6 +41,9 @@
 
   ::selection {
     background: rgba(0, 107, 255, 0.18);
+  }
+  .dark ::selection {
+    background: rgba(0, 107, 255, 0.32);
   }
 }
 
@@ -42,9 +57,12 @@
   }
   /* Geist tonal card: subtle elevation over a hairline border. */
   .card {
-    @apply rounded-xl border bg-white;
+    @apply rounded-xl border bg-white dark:bg-neutral-900;
     border-color: var(--line);
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.04);
+  }
+  .dark .card {
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
   }
 }
 
@@ -60,25 +78,25 @@
   @apply text-base font-semibold mt-5 mb-2;
 }
 .md-preview p {
-  @apply my-2 leading-relaxed text-neutral-600;
+  @apply my-2 leading-relaxed text-neutral-600 dark:text-neutral-400;
 }
 .md-preview ul {
-  @apply list-disc pl-6 my-2 space-y-1 text-neutral-600;
+  @apply list-disc pl-6 my-2 space-y-1 text-neutral-600 dark:text-neutral-400;
 }
 .md-preview ol {
-  @apply list-decimal pl-6 my-2 space-y-1 text-neutral-600;
+  @apply list-decimal pl-6 my-2 space-y-1 text-neutral-600 dark:text-neutral-400;
 }
 .md-preview code {
-  @apply rounded bg-neutral-100 px-1 py-0.5 text-[13px] font-mono text-neutral-800;
+  @apply rounded bg-neutral-100 px-1 py-0.5 text-[13px] font-mono text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200;
 }
 .md-preview pre {
-  @apply rounded-md bg-neutral-900 text-neutral-100 p-3 overflow-x-auto my-3 text-[13px];
+  @apply rounded-md bg-neutral-900 text-neutral-100 p-3 overflow-x-auto my-3 text-[13px] dark:bg-black dark:border dark:border-line;
 }
 .md-preview pre code {
   @apply bg-transparent p-0 text-inherit;
 }
 .md-preview strong {
-  @apply font-semibold text-neutral-900;
+  @apply font-semibold text-neutral-900 dark:text-neutral-100;
 }
 .md-preview a {
   @apply text-brand underline underline-offset-2;

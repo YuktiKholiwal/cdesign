@@ -21,30 +21,30 @@ export function DesignCard({ design }: { design: DesignCardData }) {
   return (
     <Link
       href={`/designs/${design.slug}`}
-      className="group flex flex-col overflow-hidden rounded-xl border border-line bg-white shadow-[0_2px_2px_rgba(0,0,0,0.04)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_1px_1px_rgba(0,0,0,0.02),0_8px_16px_-4px_rgba(0,0,0,0.04),0_24px_32px_-8px_rgba(0,0,0,0.06)]"
+      className="group flex flex-col overflow-hidden rounded-xl border border-line bg-white dark:bg-neutral-900 shadow-[0_2px_2px_rgba(0,0,0,0.04)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_1px_1px_rgba(0,0,0,0.02),0_8px_16px_-4px_rgba(0,0,0,0.04),0_24px_32px_-8px_rgba(0,0,0,0.06)]"
     >
-      <div className="relative h-44 overflow-hidden bg-neutral-50">
+      <div className="relative h-44 overflow-hidden bg-neutral-50 dark:bg-neutral-900">
         <Thumbnail source={design.source} title={design.title} />
         <span className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[var(--line)]" />
       </div>
 
       <div className="flex flex-1 flex-col p-4">
         <div className="flex items-baseline justify-between gap-2">
-          <h3 className="text-[15px] font-semibold tracking-tight text-neutral-900">
+          <h3 className="text-[15px] font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
             {design.title}
           </h3>
-          <span className="shrink-0 font-mono text-xs text-neutral-400">
+          <span className="shrink-0 font-mono text-xs text-neutral-400 dark:text-neutral-500">
             ↓{formatInstalls(design.installs)}
           </span>
         </div>
-        <p className="mt-1.5 line-clamp-2 flex-1 text-sm leading-relaxed text-neutral-500">
+        <p className="mt-1.5 line-clamp-2 flex-1 text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
           {design.description}
         </p>
         <div className="mt-3 flex flex-wrap gap-1.5">
           {design.topics.slice(0, 3).map((topic) => (
             <span
               key={topic}
-              className="rounded-full border border-line px-2 py-0.5 font-mono text-[11px] text-neutral-500"
+              className="rounded-full border border-line px-2 py-0.5 font-mono text-[11px] text-neutral-500 dark:text-neutral-400"
             >
               {topic}
             </span>

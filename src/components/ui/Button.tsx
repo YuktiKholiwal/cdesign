@@ -19,10 +19,12 @@ const sizes: Record<Size, string> = {
 };
 
 const variants: Record<Variant, string> = {
-  primary: "bg-neutral-900 text-white hover:bg-neutral-700",
+  primary:
+    "bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300",
   secondary:
-    "border border-black/[0.08] bg-white text-neutral-900 hover:border-black/20 hover:bg-neutral-50",
-  tertiary: "text-neutral-900 hover:bg-black/[0.05]",
+    "border border-black/[0.08] bg-white text-neutral-900 hover:border-black/20 hover:bg-neutral-50 dark:border-white/[0.12] dark:bg-neutral-900 dark:text-neutral-100 dark:hover:border-white/25 dark:hover:bg-neutral-800",
+  tertiary:
+    "text-neutral-900 hover:bg-black/[0.05] dark:text-neutral-100 dark:hover:bg-white/[0.06]",
   error: "bg-danger text-white hover:opacity-90",
 };
 

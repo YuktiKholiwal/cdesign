@@ -36,23 +36,23 @@ export default async function DesignPage({
     <main className="mx-auto max-w-5xl px-5 py-10">
       <Link
         href="/"
-        className="font-mono text-[13px] text-neutral-500 transition-colors hover:text-neutral-900"
+        className="font-mono text-[13px] text-neutral-500 dark:text-neutral-400 transition-colors hover:text-neutral-900 dark:hover:text-neutral-100"
       >
         ← All designs
       </Link>
 
       <header className="mt-5 border-b border-line pb-8">
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
+        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-4xl">
           {manifest.title}
         </h1>
-        <p className="mt-2 max-w-2xl text-lg leading-relaxed text-neutral-500">
+        <p className="mt-2 max-w-2xl text-lg leading-relaxed text-neutral-500 dark:text-neutral-400">
           {manifest.description}
         </p>
-        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[13px] text-neutral-500">
+        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[13px] text-neutral-500 dark:text-neutral-400">
           <span>
-            by <span className="text-neutral-700">{manifest.author}</span>
+            by <span className="text-neutral-700 dark:text-neutral-200">{manifest.author}</span>
           </span>
-          <span className="text-neutral-300">·</span>
+          <span className="text-neutral-300 dark:text-neutral-600">·</span>
           <a
             href={manifest.source}
             target="_blank"
@@ -61,7 +61,7 @@ export default async function DesignPage({
           >
             {host} ↗
           </a>
-          <span className="text-neutral-300">·</span>
+          <span className="text-neutral-300 dark:text-neutral-600">·</span>
           <span>↓ {pkg.installs.toLocaleString()} installs</span>
         </div>
         <div className="mt-4 flex flex-wrap gap-1.5">
@@ -69,7 +69,7 @@ export default async function DesignPage({
             <Link
               key={topic}
               href={`/topics/${encodeURIComponent(topic)}`}
-              className="rounded-full border border-line px-2.5 py-0.5 font-mono text-xs text-neutral-500 transition-colors hover:border-black/20 hover:text-neutral-900"
+              className="rounded-full border border-line px-2.5 py-0.5 font-mono text-xs text-neutral-500 dark:text-neutral-400 transition-colors hover:border-black/20 dark:hover:border-white/25 hover:text-neutral-900 dark:hover:text-neutral-100"
             >
               {topic}
             </Link>

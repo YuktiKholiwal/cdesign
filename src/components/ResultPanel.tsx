@@ -40,8 +40,8 @@ export function ResultPanel({
   return (
     <section className="mt-10 space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-lg font-semibold text-neutral-800">
-          design.md for <span className="font-mono text-neutral-600">{host}</span>
+        <h2 className="text-lg font-semibold text-neutral-800 dark:text-neutral-200">
+          design.md for <span className="font-mono text-neutral-600 dark:text-neutral-300">{host}</span>
           {streaming && (
             <span className="ml-2 animate-pulse text-sm font-normal text-brand">
               writing…
@@ -58,7 +58,7 @@ export function ResultPanel({
           <button
             type="button"
             onClick={() => downloadTextFile(`${stem}.design.md`, designMd, "text/markdown")}
-            className="inline-flex items-center gap-1.5 rounded-md border border-neutral-300 bg-white px-3 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-50 active:bg-neutral-100"
+            className="inline-flex items-center gap-1.5 rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-3 py-1.5 text-sm font-medium text-neutral-700 dark:text-neutral-200 transition hover:bg-neutral-50 dark:hover:bg-neutral-800 active:bg-neutral-100 dark:active:bg-neutral-800"
           >
             ↓ design.md
           </button>
@@ -71,7 +71,7 @@ export function ResultPanel({
                 "application/json",
               )
             }
-            className="inline-flex items-center gap-1.5 rounded-md border border-neutral-300 bg-white px-3 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-50 active:bg-neutral-100"
+            className="inline-flex items-center gap-1.5 rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-3 py-1.5 text-sm font-medium text-neutral-700 dark:text-neutral-200 transition hover:bg-neutral-50 dark:hover:bg-neutral-800 active:bg-neutral-100 dark:active:bg-neutral-800"
           >
             ↓ tokens.json
           </button>
@@ -79,7 +79,7 @@ export function ResultPanel({
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 border-b border-neutral-200">
+      <div className="flex gap-1 border-b border-neutral-200 dark:border-neutral-700">
         <TabButton active={tab === "spec"} onClick={() => setTab("spec")}>
           Spec
         </TabButton>
@@ -156,17 +156,17 @@ function PublishBar({
   }
 
   return (
-    <div className="rounded-xl border border-line bg-neutral-50 p-5">
-      <h3 className="text-sm font-semibold tracking-tight text-neutral-900">
+    <div className="rounded-xl border border-line bg-neutral-50 dark:bg-neutral-900 p-5">
+      <h3 className="text-sm font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
         Install this design
       </h3>
       {slug ? (
         <div className="mt-3 space-y-2">
-          <p className="text-sm text-neutral-600">
+          <p className="text-sm text-neutral-600 dark:text-neutral-300">
             Published. Anyone can add it to their project:
           </p>
           <InstallCommand slug={slug} size="sm" />
-          <p className="text-xs text-neutral-400">
+          <p className="text-xs text-neutral-400 dark:text-neutral-500">
             Shareable link — not listed in the marketplace grid.
           </p>
         </div>
@@ -176,11 +176,11 @@ function PublishBar({
             type="button"
             onClick={publish}
             disabled={streaming || publishing}
-            className="inline-flex items-center justify-center rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex items-center justify-center rounded-md bg-neutral-900 dark:bg-neutral-100 px-4 py-2 text-sm font-medium text-white dark:text-neutral-900 transition hover:bg-neutral-700 dark:hover:bg-neutral-300 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {publishing ? "Publishing…" : "Publish & get install command"}
           </button>
-          <span className="text-sm text-neutral-500">
+          <span className="text-sm text-neutral-500 dark:text-neutral-400">
             {streaming
               ? "Available once the spec finishes."
               : "Get an npx command to install this exact spec."}
@@ -188,7 +188,7 @@ function PublishBar({
         </div>
       )}
       {error && (
-        <p className="mt-3 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+        <p className="mt-3 rounded-md border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-950/40 px-3 py-2 text-sm text-red-700 dark:text-red-300">
           {error}
         </p>
       )}
@@ -210,7 +210,7 @@ function TabButton({
       className={`-mb-px border-b-2 px-4 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-50 ${
         active
           ? "border-brand text-brand-hover"
-          : "border-transparent text-neutral-500 hover:text-neutral-800"
+          : "border-transparent text-neutral-500 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-100"
       }`}
       {...rest}
     >
@@ -223,19 +223,19 @@ function SpecView({ designMd }: { designMd: string }) {
   return (
     <div className="grid gap-6 lg:grid-cols-2">
       <div className="flex flex-col">
-        <span className="mb-2 text-sm font-medium text-neutral-500">
+        <span className="mb-2 text-sm font-medium text-neutral-500 dark:text-neutral-400">
           Raw Markdown
         </span>
         <textarea
           readOnly
           value={designMd}
           spellCheck={false}
-          className="h-[28rem] w-full resize-y rounded-md border border-neutral-300 bg-white p-3 font-mono text-xs leading-relaxed text-neutral-800 shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+          className="h-[28rem] w-full resize-y rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 p-3 font-mono text-xs leading-relaxed text-neutral-800 dark:text-neutral-200 shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
         />
       </div>
       <div className="flex flex-col">
-        <span className="mb-2 text-sm font-medium text-neutral-500">Preview</span>
-        <div className="md-preview h-[28rem] overflow-y-auto rounded-md border border-neutral-300 bg-white p-5 shadow-sm">
+        <span className="mb-2 text-sm font-medium text-neutral-500 dark:text-neutral-400">Preview</span>
+        <div className="md-preview h-[28rem] overflow-y-auto rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 p-5 shadow-sm">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{designMd}</ReactMarkdown>
         </div>
       </div>
@@ -290,18 +290,18 @@ function PreviewView({ designMd }: { designMd: string }) {
           <button
             type="button"
             onClick={() => downloadTextFile("preview.html", html, "text/html")}
-            className="inline-flex items-center gap-1.5 rounded-md border border-neutral-300 bg-white px-3 py-1.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-50"
+            className="inline-flex items-center gap-1.5 rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-3 py-1.5 text-sm font-medium text-neutral-700 dark:text-neutral-200 transition hover:bg-neutral-50 dark:hover:bg-neutral-800"
           >
             ↓ preview.html
           </button>
         )}
-        <span className="text-sm text-neutral-500">
+        <span className="text-sm text-neutral-500 dark:text-neutral-400">
           A sample UI is built from the spec, rendered in a sandbox.
         </span>
       </div>
 
       {error && (
-        <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+        <p className="rounded-md border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-950/40 px-3 py-2 text-sm text-red-700 dark:text-red-300">
           {error}
         </p>
       )}
@@ -317,11 +317,11 @@ function PreviewView({ designMd }: { designMd: string }) {
           title="Design system preview"
           sandbox="allow-scripts"
           srcDoc={html}
-          className="h-[36rem] w-full rounded-md border border-neutral-300 bg-white shadow-sm"
+          className="h-[36rem] w-full rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 shadow-sm"
         />
       ) : (
         !loading && (
-          <div className="flex h-[20rem] items-center justify-center rounded-md border border-dashed border-neutral-300 bg-neutral-50 text-center text-sm text-neutral-500">
+          <div className="flex h-[20rem] items-center justify-center rounded-md border border-dashed border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 text-center text-sm text-neutral-500 dark:text-neutral-400">
             <p className="max-w-sm px-6">
               Generate a live component to see whether the spec actually
               reproduces this site&apos;s look. The result is rendered in a

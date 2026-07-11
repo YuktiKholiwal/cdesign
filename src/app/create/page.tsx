@@ -113,12 +113,12 @@ export default function CreatePage() {
   return (
     <main className="mx-auto max-w-5xl px-5 py-16 sm:py-20">
       <header className="mx-auto max-w-2xl text-center">
-        <h1 className="text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
+        <h1 className="text-4xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-5xl">
           Create a Design
         </h1>
-        <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-neutral-500">
+        <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-neutral-500 dark:text-neutral-400">
           Paste a public website URL and generate a clean{" "}
-          <span className="font-mono text-neutral-700">design.md</span> spec — the
+          <span className="font-mono text-neutral-700 dark:text-neutral-200">design.md</span> spec — the
           same package format the marketplace ships. Preview it live, then
           download the package to publish.
         </p>
@@ -135,25 +135,25 @@ export default function CreatePage() {
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             disabled={loading}
-            className="h-12 flex-1 rounded-md border border-line bg-white px-3.5 text-neutral-900 placeholder:text-neutral-400 transition-colors focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 disabled:opacity-60"
+            className="h-12 flex-1 rounded-md border border-line bg-white dark:bg-neutral-900 px-3.5 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 dark:placeholder:text-neutral-500 transition-colors focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 disabled:opacity-60"
           />
           <button
             type="submit"
             disabled={loading || !url.trim()}
-            className="inline-flex h-12 items-center justify-center rounded-md bg-neutral-900 px-5 text-[15px] font-medium text-white transition-colors hover:bg-neutral-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex h-12 items-center justify-center rounded-md bg-neutral-900 dark:bg-neutral-100 px-5 text-[15px] font-medium text-white dark:text-neutral-900 transition-colors hover:bg-neutral-700 dark:hover:bg-neutral-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {loading ? "Generating…" : "Generate"}
           </button>
         </div>
 
         {error && (
-          <p className="mt-3 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+          <p className="mt-3 rounded-md border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-950/40 px-3 py-2 text-sm text-red-700 dark:text-red-300">
             {error}
           </p>
         )}
 
         {loading && !streaming && (
-          <p className="mt-3 text-sm text-neutral-500">
+          <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400">
             Fetching the page and extracting design tokens…
           </p>
         )}
@@ -174,8 +174,8 @@ export default function CreatePage() {
       )}
 
       {showResult && (
-        <section className="mx-auto mt-10 max-w-2xl rounded-xl border border-line bg-neutral-50 p-5 text-sm text-neutral-600">
-          <h2 className="font-semibold tracking-tight text-neutral-900">
+        <section className="mx-auto mt-10 max-w-2xl rounded-xl border border-line bg-neutral-50 dark:bg-neutral-900 p-5 text-sm text-neutral-600 dark:text-neutral-300">
+          <h2 className="font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
             Add it to the marketplace grid
           </h2>
           <p className="mt-2">

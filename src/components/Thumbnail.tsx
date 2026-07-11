@@ -15,7 +15,7 @@ export function Thumbnail({ source, title }: { source: string; title: string }) 
 
   if (!source || failed) {
     return (
-      <div className="grid h-full place-items-center font-mono text-xs text-neutral-400">
+      <div className="grid h-full place-items-center font-mono text-xs text-neutral-400 dark:text-neutral-500">
         no preview
       </div>
     );

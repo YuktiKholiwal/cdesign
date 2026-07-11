@@ -32,13 +32,13 @@ export function DesignDetail({
   return (
     <section className="space-y-8">
       <div className="card p-5">
-        <p className="font-mono text-xs uppercase tracking-wider text-neutral-400">
+        <p className="font-mono text-xs uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
           Install
         </p>
-        <p className="mb-3 mt-1.5 text-sm text-neutral-500">
-          Drops <span className="font-mono text-neutral-700">design.md</span>{" "}
+        <p className="mb-3 mt-1.5 text-sm text-neutral-500 dark:text-neutral-400">
+          Drops <span className="font-mono text-neutral-700 dark:text-neutral-200">design.md</span>{" "}
           into{" "}
-          <span className="font-mono text-neutral-700">
+          <span className="font-mono text-neutral-700 dark:text-neutral-200">
             ./.claude/designs/{manifest.slug}/
           </span>{" "}
           so your agent builds on-brand UI.
@@ -126,8 +126,8 @@ function TabButton({
       type="button"
       className={`-mb-px border-b-2 pb-3 text-sm font-medium transition-colors ${
         active
-          ? "border-neutral-900 text-neutral-900"
-          : "border-transparent text-neutral-400 hover:text-neutral-900"
+          ? "border-neutral-900 text-neutral-900 dark:text-neutral-100"
+          : "border-transparent text-neutral-400 dark:text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100"
       }`}
       {...rest}
     >
@@ -140,18 +140,18 @@ function SpecView({ designMd }: { designMd: string }) {
   return (
     <div className="grid gap-5 lg:grid-cols-2">
       <div className="flex flex-col">
-        <span className="mb-2 font-mono text-xs uppercase tracking-wider text-neutral-400">
+        <span className="mb-2 font-mono text-xs uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
           Raw Markdown
         </span>
         <textarea
           readOnly
           value={designMd}
           spellCheck={false}
-          className="h-[32rem] w-full resize-y rounded-xl border border-line bg-neutral-50 p-4 font-mono text-xs leading-relaxed text-neutral-700 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+          className="h-[32rem] w-full resize-y rounded-xl border border-line bg-neutral-50 dark:bg-neutral-900 p-4 font-mono text-xs leading-relaxed text-neutral-700 dark:text-neutral-200 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
         />
       </div>
       <div className="flex flex-col">
-        <span className="mb-2 font-mono text-xs uppercase tracking-wider text-neutral-400">
+        <span className="mb-2 font-mono text-xs uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
           Rendered
         </span>
         <div className="md-preview card h-[32rem] overflow-y-auto p-6">
@@ -175,7 +175,7 @@ function PreviewView({ source, title }: { source: string; title: string }) {
 
   if (!source) {
     return (
-      <div className="flex h-[20rem] items-center justify-center rounded-xl border border-dashed border-line bg-neutral-50 text-center text-sm text-neutral-500">
+      <div className="flex h-[20rem] items-center justify-center rounded-xl border border-dashed border-line bg-neutral-50 dark:bg-neutral-900 text-center text-sm text-neutral-500 dark:text-neutral-400">
         <p className="max-w-sm px-6">
           No source site is recorded for this design.
         </p>
@@ -186,9 +186,9 @@ function PreviewView({ source, title }: { source: string; title: string }) {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
-        <span className="text-sm text-neutral-500">
+        <span className="text-sm text-neutral-500 dark:text-neutral-400">
           Screenshot of{" "}
-          <span className="font-mono text-neutral-700">{host}</span>. Open the
+          <span className="font-mono text-neutral-700 dark:text-neutral-200">{host}</span>. Open the
           live site for the real, interactive page.
         </span>
         <a
@@ -204,10 +204,10 @@ function PreviewView({ source, title }: { source: string; title: string }) {
       </div>
 
       {shotFailed ? (
-        <div className="flex h-[20rem] flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-line bg-neutral-50 text-center text-sm text-neutral-500">
+        <div className="flex h-[20rem] flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-line bg-neutral-50 dark:bg-neutral-900 text-center text-sm text-neutral-500 dark:text-neutral-400">
           <p className="max-w-sm px-6">
             Couldn&apos;t load a screenshot of{" "}
-            <span className="font-mono text-neutral-700">{host}</span>.
+            <span className="font-mono text-neutral-700 dark:text-neutral-200">{host}</span>.
           </p>
           <a href={source} target="_blank" rel="noopener noreferrer">
             <Button type="button" variant="secondary" size="sm">
@@ -221,7 +221,7 @@ function PreviewView({ source, title }: { source: string; title: string }) {
           alt={`${title} screenshot`}
           src={screenshotUrl(source, 1600, 1000)}
           onError={() => setShotFailed(true)}
-          className="w-full rounded-xl border border-line bg-white shadow-[0_2px_2px_rgba(0,0,0,0.04)]"
+          className="w-full rounded-xl border border-line bg-white dark:bg-neutral-900 shadow-[0_2px_2px_rgba(0,0,0,0.04)]"
         />
       )}
     </div>
