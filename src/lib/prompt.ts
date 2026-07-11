@@ -1,4 +1,5 @@
 import type { DesignSnippets, ExtractedDesign } from "./types";
+import { DIMENSION_LABELS, type Selection } from "./remix";
 
 /** Fixed, opinionated system prompt for the design-system documenter. */
 export const SYSTEM_PROMPT = `You are a design system documenter. Given raw extracted design tokens and HTML/CSS snippets from a real website, you must infer a concise but high-quality design spec in Markdown called design.md.
@@ -127,6 +128,77 @@ ${cssSnippetBlock}
 ---
 
 Produce a design.md document following EXACTLY this structure and section order. Replace {{siteNameOrHost}} with the site's name (if obvious) or its host. Fill every section using the data above; mark anything not directly supported as "(assumed)".
+
+${OUTPUT_TEMPLATE}`;
+}
+
+/**
+ * Build the user message for a REMIX: a merged token set assembled from two
+ * different sources, one dimension at a time. The merged JSON already reflects
+ * the user's per-dimension choices, so the model mostly documents it as usual —
+ * but two things need calling out explicitly:
+ *
+ *  1. Provenance — the spec should note, in Brand & Layout, which source each
+ *     dimension came from, since the blend is deliberate.
+ *  2. Component re-skinning — the component CSS snippets may come from a
+ *     different source than the color/radius/shadow tokens, so their baked-in
+ *     values must be ignored in favour of the chosen tokens.
+ */
+export function buildRemixPrompt(args: {
+  labelA: string;
+  labelB: string;
+  selection: Selection;
+  merged: ExtractedDesign;
+  snippets: DesignSnippets;
+}): string {
+  const { labelA, labelB, selection, merged, snippets } = args;
+
+  const provenance = (Object.keys(DIMENSION_LABELS) as (keyof typeof DIMENSION_LABELS)[])
+    .map((d) => {
+      const from = selection[d] === "a" ? labelA : labelB;
+      return `- ${DIMENSION_LABELS[d]}: ${from}`;
+    })
+    .join("\n");
+
+  const componentsFrom = selection.components === "a" ? labelA : labelB;
+
+  const htmlSnippetBlock =
+    snippets.htmlSnippets.length > 0
+      ? snippets.htmlSnippets
+          .map((s, i) => `Snippet ${i + 1}:\n${s}`)
+          .join("\n\n")
+      : "(none captured)";
+
+  const cssSnippetBlock = snippets.cssSnippet ?? "(none captured)";
+
+  return `This is a REMIX: a single design system assembled by taking each design dimension from one of two real sites.
+
+Source A: ${labelA}
+Source B: ${labelB}
+
+Dimension provenance (where each part of the merged tokens came from):
+${provenance}
+
+The merged token set below already reflects these choices — document it as one coherent design system, but in the "Brand & Layout" section, briefly state which source each dimension came from.
+
+IMPORTANT — the component snippets (buttons/cards/forms) come from ${componentsFrom}. Treat them as STRUCTURAL reference only (padding, sizing, shape, states, content structure). For every color, border-radius, and shadow value, use the Colors / Spacing & Radius / Shadows tokens in the merged JSON — do NOT reuse raw color, radius, or shadow values that appear inside the component snippets, because those may belong to a different source. Where the borrowed palette and typography don't obviously fit together, reconcile them sensibly and mark any such judgement as "(assumed)".
+
+## Merged design tokens (JSON)
+\`\`\`json
+${JSON.stringify(merged, null, 2)}
+\`\`\`
+
+## Representative HTML snippets (from ${componentsFrom})
+${htmlSnippetBlock}
+
+## Representative CSS (button / card / form rules, from ${componentsFrom})
+\`\`\`css
+${cssSnippetBlock}
+\`\`\`
+
+---
+
+Produce a design.md document following EXACTLY this structure and section order. Replace {{siteNameOrHost}} with a short name for the remix, e.g. "${labelA} × ${labelB}". Fill every section using the data above; mark anything not directly supported as "(assumed)".
 
 ${OUTPUT_TEMPLATE}`;
 }

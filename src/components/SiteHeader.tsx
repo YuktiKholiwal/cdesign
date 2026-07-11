@@ -19,6 +19,7 @@ export function SiteHeader() {
           <nav className="hidden items-center gap-1 sm:flex">
             <NavLink href="/">Designs</NavLink>
             <NavLink href="/topics">Topics</NavLink>
+            <NavLink href="/remix">Remix</NavLink>
           </nav>
         </div>
 

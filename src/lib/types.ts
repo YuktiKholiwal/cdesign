@@ -70,6 +70,14 @@ export type GenerateErrorResponse = {
 export const STREAM_ERROR_SENTINEL = "<<<CDESIGN_ERROR>>>";
 
 /**
+ * One side of a remix: either an already-published design (looked up by slug,
+ * no fetch) or a fresh public URL (fetched + extracted on the fly).
+ */
+export type SourceRef =
+  | { kind: "design"; slug: string }
+  | { kind: "url"; url: string };
+
+/**
  * Manifest for a published design package (`design.json`). This is the
  * marketplace's equivalent of a skill's SKILL.md frontmatter — the metadata
  * the registry indexes and the CLI reads when installing.

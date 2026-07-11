@@ -333,7 +333,9 @@ function extractHtmlSnippets($: cheerio.CheerioAPI): string[] {
   return snippets.filter(Boolean).slice(0, 3);
 }
 
-function extractCssSnippet(components: ExtractedDesign["components"]): string | null {
+export function extractCssSnippet(
+  components: ExtractedDesign["components"],
+): string | null {
   const lines = [
     ...components.buttons.slice(0, 4),
     ...components.cards.slice(0, 3),

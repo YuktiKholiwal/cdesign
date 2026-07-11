@@ -165,6 +165,25 @@ export async function getDesign(slug: string): Promise<DesignPackage | null> {
 }
 
 /**
+ * Load just a published design's manifest + tokens, without the markdown or
+ * install count. Used by the remix resolver, which needs the extracted tokens
+ * of an existing design as one side of a blend. Returns null if unknown.
+ */
+export async function getTokens(
+  slug: string,
+): Promise<{ manifest: DesignManifest; tokens: ExtractedDesign } | null> {
+  const dir = path.join(DESIGNS_DIR, slug);
+  const manifest = await readJson<DesignManifest>(
+    path.join(dir, "design.json"),
+  );
+  if (!isManifest(manifest)) return null;
+  const tokens = await readJson<ExtractedDesign>(
+    path.join(dir, "tokens.json"),
+  );
+  return { manifest, tokens: tokens ?? emptyTokens() };
+}
+
+/**
  * A grid card. Thumbnails are server-rendered screenshots of the design's real
  * `source` site, so the card only needs the listing metadata (which carries
  * `source`). See `@/lib/screenshot`.

@@ -3,9 +3,11 @@ import {
   PREVIEW_SYSTEM_PROMPT,
   SYSTEM_PROMPT,
   buildPreviewPrompt,
+  buildRemixPrompt,
   buildUserPrompt,
 } from "./prompt";
 import type { DesignSnippets, ExtractedDesign } from "./types";
+import type { Selection } from "./remix";
 
 const DEFAULT_MODEL = "claude-sonnet-4-6";
 const MAX_TOKENS = 4096;
@@ -53,16 +55,11 @@ function toClaudeError(err: unknown): ClaudeError {
 }
 
 /**
- * Stream the design.md markdown via Claude from extracted signals.
+ * Stream a design.md document from Claude given a fully-built user prompt.
  * Yields text deltas as they arrive. Throws ClaudeError on failure.
  */
-export async function* streamDesignMd(args: {
-  host: string;
-  design: ExtractedDesign;
-  snippets: DesignSnippets;
-}): AsyncGenerator<string> {
+async function* streamMarkdown(userPrompt: string): AsyncGenerator<string> {
   const anthropic = getClient();
-  const userPrompt = buildUserPrompt(args);
 
   let stream: Awaited<ReturnType<typeof anthropic.messages.create>>;
   try {
@@ -89,6 +86,32 @@ export async function* streamDesignMd(args: {
   } catch (err) {
     throw toClaudeError(err);
   }
+}
+
+/**
+ * Stream the design.md markdown via Claude from a single site's extracted
+ * signals. Yields text deltas as they arrive. Throws ClaudeError on failure.
+ */
+export function streamDesignMd(args: {
+  host: string;
+  design: ExtractedDesign;
+  snippets: DesignSnippets;
+}): AsyncGenerator<string> {
+  return streamMarkdown(buildUserPrompt(args));
+}
+
+/**
+ * Stream a remixed design.md: a merged token set assembled from two sources,
+ * one dimension at a time. Throws ClaudeError on failure.
+ */
+export function streamRemixMd(args: {
+  labelA: string;
+  labelB: string;
+  selection: Selection;
+  merged: ExtractedDesign;
+  snippets: DesignSnippets;
+}): AsyncGenerator<string> {
+  return streamMarkdown(buildRemixPrompt(args));
 }
 
 /**
