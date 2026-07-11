@@ -51,7 +51,7 @@ export function ResultPanel({
           <CopyButton value={designMd} label="Copy design.md" />
           <CopyButton
             value={() => buildFollowupWithSpec(designMd)}
-            label="Copy prompt for Claude"
+            label="Copy agent prompt"
             copiedLabel="Prompt copied!"
           />
           <button
@@ -201,7 +201,7 @@ function PreviewView({ designMd }: { designMd: string }) {
           </button>
         )}
         <span className="text-sm text-neutral-500">
-          Claude builds a sample UI from the spec, rendered in a sandbox.
+          A sample UI is built from the spec, rendered in a sandbox.
         </span>
       </div>
 
@@ -213,7 +213,7 @@ function PreviewView({ designMd }: { designMd: string }) {
 
       {loading && (
         <p className="text-sm text-brand">
-          Asking Claude to build a header, hero, cards, and a form from the spec…
+          Building a header, hero, cards, and a form from the spec…
         </p>
       )}
 

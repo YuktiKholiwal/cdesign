@@ -1,6 +1,6 @@
 /**
- * The template copied by the "Copy prompt for Claude" button. Users paste this
- * into Claude along with the generated design.md.
+ * The template copied by the "Copy agent prompt" button. Users paste this into
+ * their AI coding agent along with the generated design.md.
  */
 export const FOLLOWUP_PROMPT = `You are a UI engineer using an existing design system spec.
 

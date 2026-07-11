@@ -159,7 +159,7 @@ export default function CreatePage() {
         )}
         {streaming && (
           <p className="mt-3 text-sm text-brand">
-            Claude is writing the spec — streaming live below…
+            Writing the spec — streaming live below…
           </p>
         )}
       </form>

@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "cdesign — the design spec marketplace",
   description:
-    "Browse, preview, and install design languages for your AI agent. One command drops a design.md into your project so Claude builds on-brand UI.",
+    "Browse, preview, and install design languages for your AI agent. One command drops a design.md into your project so your agent builds on-brand UI.",
 };
 
 export default function RootLayout({

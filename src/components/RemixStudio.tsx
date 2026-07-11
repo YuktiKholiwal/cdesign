@@ -222,7 +222,7 @@ export function RemixStudio({ designs }: { designs: DesignOption[] }) {
       )}
       {streaming && (
         <p className="mt-4 text-sm text-brand">
-          Claude is writing the blended spec — streaming live below…
+          Writing the blended spec — streaming live below…
         </p>
       )}
 

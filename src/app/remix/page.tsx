@@ -23,7 +23,7 @@ export default async function RemixPage() {
         <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-neutral-500">
           Pick two sources, then choose which one each part comes from — the
           palette from one, the type from another, the components from a third
-          idea. Claude writes a single{" "}
+          idea. Get a single{" "}
           <span className="font-mono text-neutral-700">design.md</span> from the
           blend.
         </p>

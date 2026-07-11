@@ -49,7 +49,7 @@ export function DesignDetail({
           <CopyButton value={designMd} label="Copy design.md" />
           <CopyButton
             value={() => buildFollowupWithSpec(designMd)}
-            label="Copy prompt for Claude"
+            label="Copy agent prompt"
             copiedLabel="Prompt copied!"
           />
           <ActionButton
