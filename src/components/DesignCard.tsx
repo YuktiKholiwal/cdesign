@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { DesignCardData } from "@/lib/registry";
-import { screenshotUrl } from "@/lib/screenshot";
+import { Thumbnail } from "./Thumbnail";
 
 /** Format an install count compactly, e.g. 1284 → "1.3k". */
 function formatInstalls(n: number): string {
@@ -24,20 +24,7 @@ export function DesignCard({ design }: { design: DesignCardData }) {
       className="group flex flex-col overflow-hidden rounded-xl border border-line bg-white shadow-[0_2px_2px_rgba(0,0,0,0.04)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_1px_1px_rgba(0,0,0,0.02),0_8px_16px_-4px_rgba(0,0,0,0.04),0_24px_32px_-8px_rgba(0,0,0,0.06)]"
     >
       <div className="relative h-44 overflow-hidden bg-neutral-50">
-        {design.source ? (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img
-            alt={`${design.title} preview`}
-            src={screenshotUrl(design.source)}
-            loading="lazy"
-            aria-hidden
-            className="pointer-events-none h-full w-full border-0 object-cover object-top"
-          />
-        ) : (
-          <div className="grid h-full place-items-center font-mono text-xs text-neutral-400">
-            no preview
-          </div>
-        )}
+        <Thumbnail source={design.source} title={design.title} />
         <span className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[var(--line)]" />
       </div>
 

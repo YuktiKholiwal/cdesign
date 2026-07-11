@@ -107,7 +107,5 @@ export type DesignPackage = {
   manifest: DesignManifest;
   designMd: string;
   tokens: ExtractedDesign;
-  /** Self-contained sample page used as the card/detail thumbnail. May be empty. */
-  previewHtml: string;
   installs: number;
 };

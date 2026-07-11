@@ -142,7 +142,7 @@ export async function getListings(): Promise<DesignListing[]> {
     .sort((a, b) => b.installs - a.installs);
 }
 
-/** Load a single full design package (manifest + spec + tokens + preview). */
+/** Load a single full design package (manifest + spec + tokens). */
 export async function getDesign(slug: string): Promise<DesignPackage | null> {
   const dir = path.join(DESIGNS_DIR, slug);
   const manifest = await readJson<DesignManifest>(
@@ -150,10 +150,9 @@ export async function getDesign(slug: string): Promise<DesignPackage | null> {
   );
   if (!isManifest(manifest)) return null;
 
-  const [designMd, tokens, previewHtml, counts] = await Promise.all([
+  const [designMd, tokens, counts] = await Promise.all([
     fs.readFile(path.join(dir, "design.md"), "utf8").catch(() => ""),
     readJson<ExtractedDesign>(path.join(dir, "tokens.json")),
-    fs.readFile(path.join(dir, "preview.html"), "utf8").catch(() => ""),
     readInstallCounts(),
   ]);
 
@@ -161,14 +160,14 @@ export async function getDesign(slug: string): Promise<DesignPackage | null> {
     manifest,
     designMd,
     tokens: tokens ?? emptyTokens(),
-    previewHtml,
     installs: counts[manifest.slug] ?? 0,
   };
 }
 
 /**
- * A grid card. Thumbnails are live iframes of the design's real `source`
- * site, so the card only needs the listing metadata (which carries `source`).
+ * A grid card. Thumbnails are server-rendered screenshots of the design's real
+ * `source` site, so the card only needs the listing metadata (which carries
+ * `source`). See `@/lib/screenshot`.
  */
 export type DesignCardData = DesignListing;
 
