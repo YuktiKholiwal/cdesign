@@ -36,3 +36,7 @@ cli/*.tgz
 
 # local dev store for user-published designs (KV in prod)
 /content/published/
+
+# CLI-installed designs (test artifacts); keep only the tracked active spec
+/.claude/designs/*
+!/.claude/designs/active/
