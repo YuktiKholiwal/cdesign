@@ -8,6 +8,7 @@ import { InstallCommand } from "./InstallCommand";
 import { Button } from "./ui/Button";
 import { FOLLOWUP_PROMPT } from "@/lib/followupPrompt";
 import { downloadTextFile } from "@/lib/download";
+import { screenshotUrl } from "@/lib/screenshot";
 import type { DesignManifest, ExtractedDesign } from "@/lib/types";
 
 type Tab = "spec" | "preview";
@@ -161,30 +162,65 @@ function SpecView({ designMd }: { designMd: string }) {
   );
 }
 
+/**
+ * Preview of the design's real source site. We show a server-rendered
+ * screenshot by default rather than a live iframe: most real sites send
+ * `X-Frame-Options` / CSP `frame-ancestors` headers that refuse framing, and a
+ * refused frame renders as a blank white box with no reliable cross-origin
+ * event to detect it. The screenshot always renders; users who want the real,
+ * interactive page can opt into the live embed (works only where the site
+ * permits framing) or open it in a new tab.
+ */
 function PreviewView({ source, title }: { source: string; title: string }) {
   const host = source.replace(/^https?:\/\//, "").replace(/\/$/, "");
+  const [live, setLive] = useState(false);
+  const [shotFailed, setShotFailed] = useState(false);
+
+  if (!source) {
+    return (
+      <div className="flex h-[20rem] items-center justify-center rounded-xl border border-dashed border-line bg-neutral-50 text-center text-sm text-neutral-500">
+        <p className="max-w-sm px-6">
+          No source site is recorded for this design.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
         <span className="text-sm text-neutral-500">
-          The live{" "}
-          <span className="font-mono text-neutral-700">{host}</span> site,
-          embedded below. Some sites block framing and may appear blank.
+          {live ? (
+            <>
+              Live <span className="font-mono text-neutral-700">{host}</span>{" "}
+              embedded below — blank means the site refuses framing.
+            </>
+          ) : (
+            <>
+              Screenshot of{" "}
+              <span className="font-mono text-neutral-700">{host}</span>. Open
+              the live site for the real, interactive page.
+            </>
+          )}
         </span>
-        <a
-          href={source}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="ml-auto"
-        >
-          <Button type="button" variant="secondary" size="sm">
-            Open site ↗
+        <div className="ml-auto flex items-center gap-2">
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            onClick={() => setLive((v) => !v)}
+          >
+            {live ? "Show screenshot" : "Load live version"}
           </Button>
-        </a>
+          <a href={source} target="_blank" rel="noopener noreferrer">
+            <Button type="button" variant="secondary" size="sm">
+              Open site ↗
+            </Button>
+          </a>
+        </div>
       </div>
 
-      {source ? (
+      {live ? (
         <iframe
           title={`${title} live site`}
           src={source}
@@ -193,12 +229,26 @@ function PreviewView({ source, title }: { source: string; title: string }) {
           referrerPolicy="no-referrer"
           className="h-[40rem] w-full rounded-xl border border-line bg-white shadow-[0_2px_2px_rgba(0,0,0,0.04)]"
         />
-      ) : (
-        <div className="flex h-[20rem] items-center justify-center rounded-xl border border-dashed border-line bg-neutral-50 text-center text-sm text-neutral-500">
+      ) : shotFailed ? (
+        <div className="flex h-[20rem] flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-line bg-neutral-50 text-center text-sm text-neutral-500">
           <p className="max-w-sm px-6">
-            No source site is recorded for this design.
+            Couldn&apos;t load a screenshot of{" "}
+            <span className="font-mono text-neutral-700">{host}</span>.
           </p>
+          <a href={source} target="_blank" rel="noopener noreferrer">
+            <Button type="button" variant="secondary" size="sm">
+              Open site ↗
+            </Button>
+          </a>
         </div>
+      ) : (
+        /* eslint-disable-next-line @next/next/no-img-element */
+        <img
+          alt={`${title} screenshot`}
+          src={screenshotUrl(source, 1600, 1000)}
+          onError={() => setShotFailed(true)}
+          className="w-full rounded-xl border border-line bg-white shadow-[0_2px_2px_rgba(0,0,0,0.04)]"
+        />
       )}
     </div>
   );
