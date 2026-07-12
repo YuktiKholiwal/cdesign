@@ -19,7 +19,12 @@ export function SiteHeader() {
           <nav className="hidden items-center gap-1 sm:flex">
             <NavLink href="/">Designs</NavLink>
             <NavLink href="/topics">Topics</NavLink>
-            <NavLink href="/remix">Remix</NavLink>
+            <NavLink href="/remix">
+              Remix
+              <span className="ml-1.5 rounded bg-brand/10 px-1 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-brand">
+                Beta
+              </span>
+            </NavLink>
           </nav>
         </div>
 
@@ -41,7 +46,7 @@ function NavLink({
   return (
     <Link
       href={href}
-      className="rounded-md px-2.5 py-1.5 text-sm font-medium text-neutral-500 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
+      className="inline-flex items-center rounded-md px-2.5 py-1.5 text-sm font-medium text-neutral-500 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
     >
       {children}
     </Link>
