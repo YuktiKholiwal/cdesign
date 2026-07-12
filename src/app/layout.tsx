@@ -28,22 +28,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    // Dark-only: the `dark` class is fixed on <html>, so all dark: variants apply.
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable}`}
-      suppressHydrationWarning
+      className={`dark ${geistSans.variable} ${geistMono.variable}`}
     >
-      <head>
-        {/*
-          Apply the saved/system theme before paint so there's no light flash on
-          a dark-theme load. Kept tiny and dependency-free; runs before hydration.
-        */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})();`,
-          }}
-        />
-      </head>
       <body className="flex min-h-screen flex-col bg-white font-sans text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-200">
         <SiteHeader />
         <div className="flex-1">{children}</div>

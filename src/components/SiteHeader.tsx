@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { ButtonLink } from "./ui/Button";
-import { ThemeToggle } from "./ThemeToggle";
 
 /** Minimal Geist top nav: hairline divider, translucent blur, triangle mark. */
 export function SiteHeader() {
@@ -24,12 +23,9 @@ export function SiteHeader() {
           </nav>
         </div>
 
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          <ButtonLink href="/create" variant="primary" size="sm">
-            Create
-          </ButtonLink>
-        </div>
+        <ButtonLink href="/create" variant="primary" size="sm">
+          Create
+        </ButtonLink>
       </div>
     </header>
   );
